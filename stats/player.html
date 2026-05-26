@@ -19,7 +19,7 @@
 
   <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
-<div id="mobileNav" class="nav-mobile">
+<div id="mobileNav" class="nav-mobile" style="display:none">
   <a href="../index.html">Home</a>
   <a href="../2026.html">2026</a>
   <a href="index.html">Leaderboard</a>
@@ -252,13 +252,18 @@ function renderProfile(player) {
 
 <script>
 function toggleNav(){
-  document.getElementById('mobileNav').classList.toggle('open');
+  var nav = document.getElementById('mobileNav');
+  if(nav.style.display === 'flex'){
+    nav.style.display = 'none';
+  } else {
+    nav.style.display = 'flex';
+  }
 }
 document.addEventListener('click', function(e){
   var nav = document.getElementById('mobileNav');
   var btn = document.querySelector('.nav-hamburger');
   if(nav && btn && !nav.contains(e.target) && !btn.contains(e.target)){
-    nav.classList.remove('open');
+    nav.style.display = 'none';
   }
 });
 </script>
