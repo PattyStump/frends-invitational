@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Frends Invitational — Stats</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+    .back-btn:hover { color: var(--amber); }
+  </style>
 </head>
 <body>
 
@@ -14,7 +32,6 @@
     <a href="../index.html">Home</a>
     <a href="../2026.html">2026</a>
     <a href="index.html" class="active">Leaderboard</a>
-    <a href="player.html">Player profile</a>
   </div>
 
   <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
@@ -23,25 +40,83 @@
   <a href="../index.html">Home</a>
   <a href="../2026.html">2026</a>
   <a href="index.html" class="active">Leaderboard</a>
-  <a href="player.html">Player profile</a>
 </div>
 
 <main class="page">
-  <div class="page-title">All-time leaderboard</div>
-  <div class="page-subtitle">Ranked by career win % &middot; 2022–2025</div>
-  <div id="board"><div class="loading">Loading stats&hellip;</div></div>
+
+  <div id="leaderboardView">
+    <div class="page-title">All-time leaderboard</div>
+    <div class="page-subtitle">Ranked by career win % &middot; 2022–2025</div>
+    <div id="board"><div class="loading">Loading stats&hellip;</div></div>
+  </div>
+
+  <div id="profileView" style="display:none">
+    <button class="back-btn" type="button" onclick="closeProfile()">&larr; Back to leaderboard</button>
+
+    <div class="profile-header">
+      <div class="select-row">
+        <label>Player</label>
+        <select id="playerSelect" onchange="onPlayerChange()"></select>
+      </div>
+      <div class="profile-identity">
+        <div class="avatar" id="avatarWrap" title="Click to upload photo">
+          <span class="avatar-initial" id="avatarInitial">—</span>
+          <div class="avatar-overlay">
+            <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:#fff;fill:none;stroke-width:1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+          <input type="file" accept="image/*" onchange="handlePhoto(event)" />
+        </div>
+        <div>
+          <div class="player-name" id="playerName">—</div>
+          <div class="player-meta" id="playerMeta"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="profileBody"><div class="loading">Loading stats&hellip;</div></div>
+  </div>
+
 </main>
 
 <script src="data.js"></script>
+<script src="profile.js"></script>
 <script>
+function openProfile(player) {
+  document.getElementById('playerSelect').value = player;
+  const url = new URL(window.location);
+  url.searchParams.set('p', player);
+  window.history.replaceState({}, '', url);
+  renderProfile(player);
+  document.getElementById('leaderboardView').style.display = 'none';
+  document.getElementById('profileView').style.display = '';
+  window.scrollTo(0, 0);
+}
+
+function closeProfile() {
+  document.getElementById('profileView').style.display = 'none';
+  document.getElementById('leaderboardView').style.display = '';
+  const url = new URL(window.location);
+  url.searchParams.delete('p');
+  window.history.replaceState({}, '', url);
+  window.scrollTo(0, 0);
+}
+
 (async () => {
-  const ms = await loadAllMatches();
-  const players = allPlayers(ms);
-  const maxPct = Math.max(...players.map(p => computePlayerStats(ms, p).pct));
+  ALL_MATCHES = await loadAllMatches();
+  const players = allPlayers(ALL_MATCHES);
+
+  // Populate the in-place profile panel's player dropdown.
+  const sel = document.getElementById('playerSelect');
+  players.forEach(p => {
+    const o = document.createElement('option');
+    o.value = p; o.textContent = p;
+    sel.appendChild(o);
+  });
 
   const ranked = players
-    .map(p => ({ p, s: computePlayerStats(ms, p) }))
+    .map(p => ({ p, s: computePlayerStats(ALL_MATCHES, p) }))
     .sort((a, b) => b.s.pct - a.s.pct || b.s.W - a.s.W);
+  const maxPct = Math.max(...ranked.map(({ s }) => s.pct));
 
   document.getElementById('board').innerHTML = ranked.map(({ p, s }, i) => {
     const col = colorP(s.pct);
@@ -52,7 +127,7 @@
       <div class="lb-row">
         <span class="lb-rank ${rankCls}">${i + 1}</span>
         <div class="lb-info">
-          <a class="lb-name" href="player.html?p=${encodeURIComponent(p)}">${p}</a>
+          <a class="lb-name" href="player.html?p=${encodeURIComponent(p)}" data-player="${p}">${p}</a>
           <div class="lb-sub">${s.yearCount} yr${s.yearCount !== 1 ? 's' : ''}${bestYr}</div>
         </div>
         <div class="lb-bar-wrap">
@@ -64,6 +139,19 @@
         <div class="lb-val" style="color:${col}">${s.pct}%</div>
       </div>`;
   }).join('');
+
+  // Open the profile in place instead of navigating to player.html.
+  // The href is kept as a graceful fallback if scripting is unavailable.
+  document.querySelectorAll('.lb-name').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      openProfile(a.dataset.player);
+    });
+  });
+
+  // Deep link: ?p=Name opens that profile on load; otherwise the leaderboard shows.
+  const urlPlayer = new URLSearchParams(window.location.search).get('p');
+  if (urlPlayer && players.includes(urlPlayer)) openProfile(urlPlayer);
 })();
 </script>
 
