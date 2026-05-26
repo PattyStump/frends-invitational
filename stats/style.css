@@ -78,13 +78,13 @@ nav {
 .nav-mobile {
   display: none;
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   top: 56px;
   left: 0;
   right: 0;
   background: var(--bg);
   border-bottom: 0.5px solid var(--border);
-  padding: 1rem 2rem;
+  padding: 0.5rem 1.5rem 1rem;
   gap: 0;
   z-index: 99;
 }
@@ -95,6 +95,7 @@ nav {
   text-decoration: none;
   padding: 12px 0;
   border-bottom: 0.5px solid var(--border);
+  text-decoration: none !important;
 }
 .nav-mobile a:last-child { border-bottom: none; }
 .nav-mobile a.active { color: var(--text); }
