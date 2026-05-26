@@ -1,0 +1,26 @@
+year,format,day,weekday,course,session,block,match_format,winner_a,winner_a_team,winner_b,winner_b_team,loser_a,loser_a_team,loser_b,loser_b_team,match_value,tie,team_a,pts_team_a,team_b,pts_team_b
+2023,modern,1,Friday,Harbour Golf Course,18-hole scramble,1,scramble,J. Ross,Team D. Dittmer,N. Verma,Team D. Dittmer,Ma. Baker,Team O. Goosen,T. Walker,Team O. Goosen,1,,Team D. Dittmer,1.0,Team O. Goosen,0
+2023,modern,1,Friday,Harbour Golf Course,18-hole scramble,2,scramble,D. Dittmer,Team D. Dittmer,D. Dumas,Team D. Dittmer,R. Nieman,Team O. Goosen,Ta. Verma,Team O. Goosen,1,,Team D. Dittmer,1.0,Team O. Goosen,0
+2023,modern,1,Friday,Harbour Golf Course,18-hole scramble,3,scramble,R. Brooks,Team D. Dittmer,B. Dazzan,Team D. Dittmer,Mi. Baker,Team O. Goosen,W. Schlosser,Team O. Goosen,1,,Team D. Dittmer,1.0,Team O. Goosen,0
+2023,modern,1,Friday,Harbour Golf Course,18-hole scramble,4,scramble,T. Pylypow,Team O. Goosen,J. Woods,Team O. Goosen,S. Murphy,Team D. Dittmer,T. Gitzel,Team D. Dittmer,1,,Team D. Dittmer,0,Team O. Goosen,1.0
+2023,modern,1,Friday,Harbour Golf Course,18-hole scramble,5,scramble,Z. Yuzdepski,Team D. Dittmer,K. MacKinnon,Team D. Dittmer,O. Goosen,Team O. Goosen,T. Banks,Team O. Goosen,1,,Team D. Dittmer,1.0,Team O. Goosen,0
+2023,modern,2,Saturday,Harbour Golf Course,18-hole scramble,1,scramble,S. Murphy,Team D. Dittmer,D. Dumas,Team D. Dittmer,T. Pylypow,Team O. Goosen,T. Banks,Team O. Goosen,1,,Team D. Dittmer,1.0,Team O. Goosen,0
+2023,modern,2,Saturday,Harbour Golf Course,18-hole scramble,2,scramble,Ta. Verma,Team O. Goosen,T. Walker,Team O. Goosen,K. MacKinnon,Team D. Dittmer,N. Verma,Team D. Dittmer,1,,Team D. Dittmer,0,Team O. Goosen,1.0
+2023,modern,2,Saturday,Harbour Golf Course,18-hole scramble,3,scramble,D. Dittmer,Team D. Dittmer,R. Brooks,Team D. Dittmer,R. Nieman,Team O. Goosen,W. Schlosser,Team O. Goosen,1,,Team D. Dittmer,1.0,Team O. Goosen,0
+2023,modern,2,Saturday,Harbour Golf Course,18-hole scramble,4,scramble,Z. Yuzdepski,Team D. Dittmer,J. Ross,Team D. Dittmer,Ma. Baker,Team O. Goosen,O. Goosen,Team O. Goosen,1,,Team D. Dittmer,1.0,Team O. Goosen,0
+2023,modern,2,Saturday,Harbour Golf Course,18-hole scramble,5,scramble,T. Gitzel,Team D. Dittmer,J. Woods,Team O. Goosen,,,,,1,YES,Team D. Dittmer,0.5,Team O. Goosen,0.5
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,1,singles,Ma. Baker,Team O. Goosen,,,J. Ross,Team D. Dittmer,,,0.5,,Team D. Dittmer,0,Team O. Goosen,0.5
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,1,singles,R. Nieman,Team O. Goosen,Z. Yuzdepski,Team D. Dittmer,,,,,0.5,YES,Team D. Dittmer,0.25,Team O. Goosen,0.25
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,1,best ball,Ma. Baker,Team O. Goosen,R. Nieman,Team O. Goosen,Z. Yuzdepski,Team D. Dittmer,J. Ross,Team D. Dittmer,1,,Team D. Dittmer,0,Team O. Goosen,1.0
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,2,singles,O. Goosen,Team O. Goosen,,,D. Dittmer,Team D. Dittmer,,,0.5,,Team D. Dittmer,0,Team O. Goosen,0.5
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,2,singles,Mi. Baker,Team O. Goosen,,,S. Murphy,Team D. Dittmer,,,0.5,,Team D. Dittmer,0,Team O. Goosen,0.5
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,2,best ball,O. Goosen,Team O. Goosen,Mi. Baker,Team O. Goosen,D. Dittmer,Team D. Dittmer,S. Murphy,Team D. Dittmer,1,,Team D. Dittmer,0,Team O. Goosen,1.0
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,3,singles,R. Brooks,Team D. Dittmer,,,T. Pylypow,Team O. Goosen,,,0.5,,Team D. Dittmer,0.5,Team O. Goosen,0
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,3,singles,B. Dazzan,Team D. Dittmer,,,W. Schlosser,Team O. Goosen,,,0.5,,Team D. Dittmer,0.5,Team O. Goosen,0
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,3,best ball,R. Brooks,Team D. Dittmer,B. Dazzan,Team D. Dittmer,T. Pylypow,Team O. Goosen,W. Schlosser,Team O. Goosen,1,,Team D. Dittmer,1.0,Team O. Goosen,0
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,4,singles,J. Woods,Team O. Goosen,,,T. Gitzel,Team D. Dittmer,,,0.5,,Team D. Dittmer,0,Team O. Goosen,0.5
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,4,singles,Ta. Verma,Team O. Goosen,,,N. Verma,Team D. Dittmer,,,0.5,,Team D. Dittmer,0,Team O. Goosen,0.5
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,4,best ball,J. Woods,Team O. Goosen,Ta. Verma,Team O. Goosen,T. Gitzel,Team D. Dittmer,N. Verma,Team D. Dittmer,1,,Team D. Dittmer,0,Team O. Goosen,1.0
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,5,singles,D. Dumas,Team D. Dittmer,,,T. Banks,Team O. Goosen,,,0.5,,Team D. Dittmer,0.5,Team O. Goosen,0
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,5,singles,T. Walker,Team O. Goosen,,,K. MacKinnon,Team D. Dittmer,,,0.5,,Team D. Dittmer,0,Team O. Goosen,0.5
+2023,modern,3,Sunday,Harbour Golf Course,singles + best ball,5,best ball,D. Dumas,Team D. Dittmer,K. MacKinnon,Team D. Dittmer,T. Banks,Team O. Goosen,T. Walker,Team O. Goosen,1,,Team D. Dittmer,1.0,Team O. Goosen,0

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frends Invitational</title>
+  <link rel="stylesheet" href="stats/style.css" />
+  <style>
+    .home-hero {
+      padding: 6rem 0 4rem;
+      border-bottom: 0.5px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .home-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 1rem;
+    }
+    .home-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 52px;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+    }
+    .home-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 0.5px solid var(--border-mid);
+      padding-bottom: 2px;
+      transition: border-color 0.15s;
+    }
+    .home-link:hover { border-color: var(--amber); color: var(--amber); }
+    .home-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .coming-soon {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      padding: 3rem 0;
+      border-top: 0.5px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Frends Invitational</a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="stats/index.html">Leaderboard</a>
+    <a href="stats/player.html">Player profile</a>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="home-hero">
+    <div class="home-eyebrow">Est. 2022</div>
+    <div class="home-title">Frends<br>Invitational</div>
+    <div class="home-desc">A Ryder Cup-style golf tournament among friends. Four years of match play, scrambles, and best balls across courses in Western Canada.</div>
+    <div class="home-links">
+      <a class="home-link" href="stats/index.html">All-time leaderboard →</a>
+      <a class="home-link" href="stats/player.html">Player profiles →</a>
+    </div>
+  </div>
+  <div class="coming-soon">More coming soon</div>
+</main>
+
+</body>
+</html>
