@@ -122,14 +122,14 @@ function closeProfile() {
   document.getElementById('board').innerHTML = ranked.map(({ p, s }, i) => {
     const col = colorP(s.pct);
     const rankCls = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
-    const bestYr = s.bestSeason.year ? ` &middot; best ${s.bestSeason.year} (${s.bestSeason.pct}%)` : '';
+    const titles = ` &middot; ${s.teamWins} title${s.teamWins !== 1 ? 's' : ''}`;
     const barW = maxPct ? Math.round(s.pct / maxPct * 100) : 0;
     return `
       <div class="lb-row">
         <span class="lb-rank ${rankCls}">${i + 1}</span>
         <div class="lb-info">
           <a class="lb-name" href="player.html?p=${encodeURIComponent(p)}" data-player="${p}">${p}</a>
-          <div class="lb-sub">${s.yearCount} yr${s.yearCount !== 1 ? 's' : ''}${bestYr}</div>
+          <div class="lb-sub">${s.yearCount} yr${s.yearCount !== 1 ? 's' : ''}${titles}</div>
         </div>
         <div class="lb-bar-wrap">
           <div class="lb-bar-track">
