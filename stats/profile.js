@@ -131,7 +131,7 @@ function renderProfile(player) {
     <div class="stat-row">
       <div class="stat-box"><div class="val">${W}-${L}-${T}</div><div class="lbl">Career W-L-T</div></div>
       <div class="stat-box"><div class="val">${wp}%</div><div class="lbl">Career win %</div></div>
-      <div class="stat-box"><div class="val">${teamWins}/${yearCount}</div><div class="lbl">Team wins</div></div>
+      <div class="stat-box"><div class="val">${teamWins}/${yearCount}</div><div class="lbl">Team titles</div></div>
     </div>
 
     <div class="section">
