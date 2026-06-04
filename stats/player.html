@@ -56,6 +56,7 @@
 <script>
 (async () => {
   ALL_MATCHES = await loadAllMatches();
+  ROSTERS = await loadRosters();
   const players = allPlayers(ALL_MATCHES);
   const sel = document.getElementById('playerSelect');
   players.forEach(p => {

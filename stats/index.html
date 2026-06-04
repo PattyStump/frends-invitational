@@ -104,6 +104,7 @@ function closeProfile() {
 
 (async () => {
   ALL_MATCHES = await loadAllMatches();
+  ROSTERS = await loadRosters();
   const players = allPlayers(ALL_MATCHES);
 
   // Populate the in-place profile panel's player dropdown.
@@ -115,15 +116,24 @@ function closeProfile() {
   });
 
   const ranked = players
-    .map(p => ({ p, s: computePlayerStats(ALL_MATCHES, p) }))
+    .map(p => ({ p, s: computePlayerStats(ALL_MATCHES, p), seed: computeSeedDiff(ALL_MATCHES, ROSTERS, p).overall }))
     .sort((a, b) => b.s.pct - a.s.pct || b.s.W - a.s.W);
   const maxPct = Math.max(...ranked.map(({ s }) => s.pct));
 
-  document.getElementById('board').innerHTML = ranked.map(({ p, s }, i) => {
+  const header = `
+    <div class="lb-head">
+      <div class="lb-rec">W-L-T</div>
+      <div class="lb-val">Win %</div>
+      <div class="lb-seed" title="Faced opponents better (↑) or worse (↓) than your own seed, on average.">vs Seed</div>
+    </div>`;
+
+  document.getElementById('board').innerHTML = header + ranked.map(({ p, s, seed }, i) => {
     const col = colorP(s.pct);
     const rankCls = i === 0 ? 'gold' : i === 1 ? 'silver' : i === 2 ? 'bronze' : '';
     const titles = ` &middot; ${s.teamWins} title${s.teamWins !== 1 ? 's' : ''}`;
     const barW = maxPct ? Math.round(s.pct / maxPct * 100) : 0;
+    const seedTxt = fmtSeed(seed);
+    const seedCol = seedColor(seed);
     return `
       <div class="lb-row">
         <span class="lb-rank ${rankCls}">${i + 1}</span>
@@ -138,6 +148,7 @@ function closeProfile() {
         </div>
         <div class="lb-rec">${s.W}-${s.L}-${s.T}</div>
         <div class="lb-val" style="color:${col}">${s.pct}%</div>
+        <div class="lb-seed" style="color:${seedCol}" title="Faced opponents better (↑) or worse (↓) than your own seed, on average.">${seedTxt}</div>
       </div>`;
   }).join('');
 

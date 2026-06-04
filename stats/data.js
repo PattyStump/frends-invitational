@@ -130,3 +130,111 @@ function computeYearRank(ms, player, year) {
   const idx = ranked.findIndex(x => x.p === player);
   return { rank: idx + 1, of: ranked.length };
 }
+
+// --- Seed / rank-differential support (added alongside existing engine) ---
+// Rosters are the SAME abbreviated player strings used in each year's master CSV
+// (canonicalized through can() so e.g. "Ta. Verma" -> "T. Verma" matches the
+// canonical identity used everywhere else).
+
+const ROSTER_FILES = [
+  'data/Frendsstatistics2022roster.csv',
+  'data/Frendsstatistics2023roster.csv',
+  'data/Frendsstatistics2024roster.csv',
+  'data/Frendsstatistics2025roster.csv',
+];
+
+async function loadRosters() {
+  const texts = await Promise.all(
+    ROSTER_FILES.map(f => fetch(f).then(r => r.text()))
+  );
+  const rosters = {};
+  texts.forEach(csv => {
+    const lines = csv.trim().split('\n');
+    if (lines.length < 2) return;
+    const header = lines[0].split(',').map(s => s.trim());
+    const iYear = header.indexOf('year');
+    const iRank = header.indexOf('rank');
+    const iPlayer = header.indexOf('player');
+    if (iYear < 0 || iRank < 0 || iPlayer < 0) return;
+    let year = null;
+    const byPlayer = new Map();
+    lines.slice(1).forEach(line => {
+      const r = line.split(',');
+      if (r.length <= iPlayer) return;
+      const y = +r[iYear];
+      const rk = +r[iRank];
+      const name = can((r[iPlayer] || '').trim());
+      if (!y || !rk || !name) return;
+      year = y;
+      byPlayer.set(name, rk);
+    });
+    if (year != null) rosters[year] = { byPlayer, size: byPlayer.size };
+  });
+  return rosters;
+}
+
+function rankOf(rosters, year, player) {
+  const yr = rosters && rosters[year];
+  if (!yr) return null;
+  const r = yr.byPlayer.get(player);
+  return r != null ? r : null;
+}
+
+function fieldSize(rosters, year) {
+  return rosters && rosters[year] ? rosters[year].size : 0;
+}
+
+// Per-year and overall "average rank differential vs. own seed", as a percent.
+// matchDiff = ( rank(p) - mean(opponent ranks) ) / (N - 1)
+// PerYear  = mean(matchDiff over p's matches in y) * 100
+// Overall  = mean(PerYear over years p actually has a value for)  [year-equal]
+// Sign: rank 1 = best, so facing lower-numbered opponents -> positive (punched up).
+function computeSeedDiff(ms, rosters, player) {
+  const byYearMatches = {};
+  ms.forEach(m => {
+    if (![m.wA, m.wB, m.lA, m.lB].includes(player)) return;
+    (byYearMatches[m.year] = byYearMatches[m.year] || []).push(m);
+  });
+
+  const byYear = {};
+  Object.keys(byYearMatches).forEach(yrKey => {
+    const year = +yrKey;
+    const matches = byYearMatches[year];
+    const myRank = rankOf(rosters, year, player);
+    const N = fieldSize(rosters, year);
+    if (myRank == null || N < 2) return;
+
+    let sum = 0, count = 0;
+    matches.forEach(m => {
+      const myTeam = teamOf(m, player);
+      if (!myTeam) return;
+      const oppNames = [m.wA, m.wB, m.lA, m.lB].filter(o => o && o !== player && teamOf(m, o) && teamOf(m, o) !== myTeam);
+      const oppRanks = oppNames.map(o => rankOf(rosters, year, o)).filter(r => r != null);
+      if (oppRanks.length === 0) return;
+      const meanOpp = oppRanks.reduce((a, b) => a + b, 0) / oppRanks.length;
+      sum += (myRank - meanOpp) / (N - 1);
+      count++;
+    });
+
+    if (count > 0) byYear[year] = (sum / count) * 100;
+  });
+
+  const yrVals = Object.values(byYear);
+  const overall = yrVals.length ? yrVals.reduce((a, b) => a + b, 0) / yrVals.length : null;
+  return { byYear, overall };
+}
+
+function fmtSeed(v) {
+  if (v == null) return '—';
+  const r = Math.round(v);
+  if (r === 0) return '0%';
+  return r > 0 ? `↑${r}%` : `↓${Math.abs(r)}%`;
+}
+
+function seedColor(v) {
+  if (v == null) return 'var(--text-tertiary)';
+  const r = Math.round(v);
+  if (r > 0) return '#1D9E75';
+  if (r < 0) return '#D85A30';
+  return 'var(--text-tertiary)';
+}

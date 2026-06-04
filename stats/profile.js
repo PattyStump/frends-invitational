@@ -5,6 +5,7 @@
 
 const PHOTOS = {};
 let ALL_MATCHES = [];
+let ROSTERS = null;
 
 function handlePhoto(e) {
   const file = e.target.files[0];
@@ -59,6 +60,7 @@ function renderProfile(player) {
 
   const allYrRanks = {};
   years.forEach(yr => { allYrRanks[yr] = computeYearRank(ms, player, yr); });
+  const seedByYear = ROSTERS ? computeSeedDiff(ms, ROSTERS, player).byYear : {};
 
   const fmts = [['scramble', 'Scramble'], ['singles', 'Singles'], ['best ball', 'Best ball']];
   const formatBarsHTML = fmts.map(([k, label]) => {
@@ -79,10 +81,14 @@ function renderProfile(player) {
     const p2 = pct(y.W, y.L, y.T);
     const rk = allYrRanks[yr];
     const ts = y.team.replace('Team ', '');
+    const sv = seedByYear[yr];
+    const seedInline = (sv != null)
+      ? ` <span style="color:${seedColor(sv)};font-weight:400" title="Faced opponents better (↑) or worse (↓) than your own seed, on average.">(${fmtSeed(sv)})</span>`
+      : '';
     return `<div class="year-card" style="border-left-color:${borderP(p2)}">
       <div class="yr">${yr}</div>
       <div class="yr-record">${y.W}-${y.L}-${y.T}</div>
-      <div class="yr-pct" style="color:${colorP(p2)}">${p2}%</div>
+      <div class="yr-pct" style="color:${colorP(p2)}">${p2}%${seedInline}</div>
       <div class="yr-team">${ts}</div>
       <div class="yr-rank">#${rk.rank} of ${rk.of}</div>
     </div>`;
