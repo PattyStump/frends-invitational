@@ -74,6 +74,8 @@
 
     .pr-note { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin: -1rem 0 1.5rem; max-width: 56ch; }
     .pr-cap { color: var(--amber); font-weight: 500; }
+    .pr-tier { display: flex; align-items: center; gap: 12px; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; color: var(--text-secondary); padding: 18px 0 8px; }
+    .pr-tier::after { content: ""; flex: 1; height: 0.5px; background: var(--border); }
 
     @media (max-width: 600px) {
       .hero-title { font-size: 48px; }
@@ -132,6 +134,7 @@
     <div class="t-section-label">Commissioner's Power Rankings</div>
     <p class="pr-note">The commissioner's subjective ranking of the field — a reference for the captains heading into the team draft.</p>
     <div class="lb-head"><span class="lb-rec">Record</span></div>
+    <div class="pr-tier">Tier 1</div>
     <div class="lb-row">
       <span class="lb-rank">1</span>
       <div class="lb-info"><a class="lb-name" href="stats/index.html?p=Ma.+Baker">Matt Baker</a><span class="lb-sub">Handicap +1.1</span></div>
@@ -144,7 +147,7 @@
     </div>
     <div class="lb-row">
       <span class="lb-rank">3</span>
-      <div class="lb-info"><a class="lb-name" href="stats/index.html?p=O.+Goosen">Owen Goosen</a><span class="lb-sub">Handicap 6.1</span></div>
+      <div class="lb-info"><a class="lb-name" href="stats/index.html?p=O.+Goosen">Owen Goosen</a><span class="lb-sub">Handicap 4.2</span></div>
       <span class="lb-rec">11-4-3</span>
     </div>
     <div class="lb-row">
@@ -154,7 +157,7 @@
     </div>
     <div class="lb-row">
       <span class="lb-rank">5</span>
-      <div class="lb-info"><a class="lb-name" href="stats/index.html?p=D.+Epp">Derek Epp</a><span class="lb-sub">Handicap 1.1</span></div>
+      <div class="lb-info"><a class="lb-name" href="stats/index.html?p=D.+Epp">Derek Epp</a><span class="lb-sub">Handicap 3.9</span></div>
       <span class="lb-rec">1-2-1</span>
     </div>
     <div class="lb-row">
@@ -172,6 +175,7 @@
       <div class="lb-info"><a class="lb-name" href="stats/index.html?p=J.+Ross">Jesse Ross</a><span class="lb-sub">Handicap 6.0</span></div>
       <span class="lb-rec">9-9-0</span>
     </div>
+    <div class="pr-tier">Tier 2</div>
     <div class="lb-row">
       <span class="lb-rank">9</span>
       <div class="lb-info"><a class="lb-name" href="stats/index.html?p=Mi.+Baker">Michael Baker</a><span class="lb-sub">Handicap 7.0</span></div>
@@ -212,6 +216,7 @@
       <div class="lb-info"><a class="lb-name" href="stats/index.html?p=T.+Pylypow">Tyson Pylypow</a><span class="lb-sub">Handicap 13.0</span></div>
       <span class="lb-rec">4-7-1</span>
     </div>
+    <div class="pr-tier">Tier 3</div>
     <div class="lb-row">
       <span class="lb-rank">17</span>
       <div class="lb-info"><a class="lb-name" href="stats/index.html?p=J.+Woods">Joel Woods</a><span class="lb-sub">Handicap 13.0</span></div>
