@@ -74,6 +74,9 @@
 
     .pr-note { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin: -1rem 0 1.5rem; max-width: 56ch; }
     .pr-cap { color: var(--amber); font-weight: 500; }
+    .team-tier { display: flex; align-items: center; gap: 10px; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; color: var(--text-tertiary); margin: 14px 0 6px; }
+    .team-tier::after { content: ""; flex: 1; height: 0.5px; background: var(--border); }
+    .team-tier:first-of-type { margin-top: 8px; }
 
     @media (max-width: 600px) {
       .hero-title { font-size: 48px; }
@@ -130,39 +133,53 @@
 
   <div class="t-section">
     <div class="t-section-label">Teams</div>
-    <p class="pr-note">The drafted rosters for 2026.</p>
+    <p class="pr-note">The drafted rosters for 2026, grouped by draft tier.</p>
     <div class="details-grid">
       <div class="detail-block">
         <div class="detail-block-label">Team Dumas</div>
+        <div class="team-tier">Tier 1</div>
         <div class="detail-items">
-          <div class="detail-item">Derek Dumas <span class="pr-cap">(C)</span></div>
           <div class="detail-item">Matt Baker</div>
           <div class="detail-item">Owen Goosen</div>
           <div class="detail-item">Derek Epp</div>
           <div class="detail-item">Colin Fraser</div>
+        </div>
+        <div class="team-tier">Tier 2</div>
+        <div class="detail-items">
           <div class="detail-item">Michael Baker</div>
           <div class="detail-item">Ty McLean</div>
           <div class="detail-item">Brandon Dazzan</div>
           <div class="detail-item">Wyatt Schlosser</div>
+        </div>
+        <div class="team-tier">Tier 3</div>
+        <div class="detail-items">
           <div class="detail-item">Tyson Pylypow</div>
           <div class="detail-item">Ty Gitzel</div>
+          <div class="detail-item">Derek Dumas <span class="pr-cap">(C)</span></div>
           <div class="detail-item">Ty Banks</div>
         </div>
       </div>
       <div class="detail-block">
         <div class="detail-block-label">Team Walker</div>
+        <div class="team-tier">Tier 1</div>
         <div class="detail-items">
-          <div class="detail-item">Trent Walker <span class="pr-cap">(C)</span></div>
           <div class="detail-item">Ryan Nieman</div>
           <div class="detail-item">Zach Yuzdepski</div>
           <div class="detail-item">Spencer Ewen</div>
           <div class="detail-item">Jesse Ross</div>
+        </div>
+        <div class="team-tier">Tier 2</div>
+        <div class="detail-items">
           <div class="detail-item">Sam Murphy</div>
           <div class="detail-item">Derek Dittmer</div>
           <div class="detail-item">Ridge Brooks</div>
           <div class="detail-item">Joel Woods</div>
+        </div>
+        <div class="team-tier">Tier 3</div>
+        <div class="detail-items">
           <div class="detail-item">Neelan Verma</div>
           <div class="detail-item">Taijal Verma</div>
+          <div class="detail-item">Trent Walker <span class="pr-cap">(C)</span></div>
           <div class="detail-item">Kole Mackinnon</div>
         </div>
       </div>
