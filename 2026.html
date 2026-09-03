@@ -100,6 +100,15 @@
     .acc[open] > summary .acc-marker { transform: rotate(180deg); }
     .acc-body { padding-bottom: 2.5rem; }
 
+    .day-acc { border-bottom: 0.5px solid var(--border); }
+    .day-acc:last-child { border-bottom: none; }
+    .day-acc > summary { list-style: none; cursor: pointer; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 1.4rem 0; }
+    .day-acc > summary::-webkit-details-marker { display: none; }
+    .day-acc > summary:hover .format-day-name { color: var(--amber); }
+    .day-acc-info { display: flex; align-items: baseline; gap: 0.85rem; flex-wrap: wrap; }
+    .day-acc[open] > summary .acc-marker { transform: rotate(180deg); }
+    .day-acc-body { padding: 0.25rem 0 2rem; }
+
     @media (max-width: 600px) {
       .hero-title { font-size: 48px; }
       .sb-score { font-size: 48px; }
@@ -232,62 +241,77 @@
     <summary><span class="acc-title">Matches</span><span class="acc-marker">▾</span></summary>
     <div class="acc-body">
     <div class="format-days">
-      <div class="format-day">
-        <div>
-          <div class="format-day-name">Friday</div>
-          <div class="format-day-date">September 4</div>
-        </div>
-        <div class="format-day-right">
-          <div class="format-day-type">Two-man scramble</div>
-          <div class="format-day-desc">1 point per match</div>
-          <div class="matchups">
-            <div class="matchup"><span class="matchup-time">1:00 pm</span><span class="matchup-teams"><span class="m-pair">S. Ewen &amp; R. Brooks</span> <span class="m-pair">vs. C. Fraser &amp; T. McLean</span></span></div>
-            <div class="matchup"><span class="matchup-time">1:10 pm</span><span class="matchup-teams"><span class="m-pair">J. Ross &amp; T. Verma</span> <span class="m-pair">vs. D. Epp &amp; D. Dumas</span></span></div>
-            <div class="matchup"><span class="matchup-time">1:20 pm</span><span class="matchup-teams"><span class="m-pair">R. Nieman &amp; E. Mearns</span> <span class="m-pair">vs. O. Goosen &amp; Mi. Baker</span></span></div>
-            <div class="matchup"><span class="matchup-time">1:30 pm</span><span class="matchup-teams"><span class="m-pair">Z. Yuzdepski &amp; K. MacKinnon</span> <span class="m-pair">vs. Ma. Baker &amp; T. Gitzel</span></span></div>
-            <div class="matchup"><span class="matchup-time">1:40 pm</span><span class="matchup-teams"><span class="m-pair">D. Dittmer &amp; T. Walker</span> <span class="m-pair">vs. W. Schlosser &amp; T. Banks</span></span></div>
-            <div class="matchup"><span class="matchup-time">1:50 pm</span><span class="matchup-teams"><span class="m-pair">J. Woods &amp; N. Verma</span> <span class="m-pair">vs. B. Dazzan &amp; T. Pylypow</span></span></div>
+      <details class="day-acc">
+        <summary>
+          <span class="day-acc-info">
+            <span class="format-day-name">Friday</span>
+            <span class="format-day-date">September 4 · Two-man scramble</span>
+          </span>
+          <span class="acc-marker">▾</span>
+        </summary>
+        <div class="day-acc-body">
+          <div class="format-day-right">
+            <div class="format-day-type">Two-man scramble</div>
+            <div class="format-day-desc">1 point per match</div>
+            <div class="matchups">
+              <div class="matchup"><span class="matchup-time">1:00 pm</span><span class="matchup-teams"><span class="m-pair">S. Ewen &amp; R. Brooks</span> <span class="m-pair">vs. C. Fraser &amp; T. McLean</span></span></div>
+              <div class="matchup"><span class="matchup-time">1:10 pm</span><span class="matchup-teams"><span class="m-pair">J. Ross &amp; T. Verma</span> <span class="m-pair">vs. D. Epp &amp; D. Dumas</span></span></div>
+              <div class="matchup"><span class="matchup-time">1:20 pm</span><span class="matchup-teams"><span class="m-pair">R. Nieman &amp; E. Mearns</span> <span class="m-pair">vs. O. Goosen &amp; Mi. Baker</span></span></div>
+              <div class="matchup"><span class="matchup-time">1:30 pm</span><span class="matchup-teams"><span class="m-pair">Z. Yuzdepski &amp; K. MacKinnon</span> <span class="m-pair">vs. Ma. Baker &amp; T. Gitzel</span></span></div>
+              <div class="matchup"><span class="matchup-time">1:40 pm</span><span class="matchup-teams"><span class="m-pair">D. Dittmer &amp; T. Walker</span> <span class="m-pair">vs. W. Schlosser &amp; T. Banks</span></span></div>
+              <div class="matchup"><span class="matchup-time">1:50 pm</span><span class="matchup-teams"><span class="m-pair">J. Woods &amp; N. Verma</span> <span class="m-pair">vs. B. Dazzan &amp; T. Pylypow</span></span></div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="format-day">
-        <div>
-          <div class="format-day-name">Saturday</div>
-          <div class="format-day-date">September 5</div>
-        </div>
-        <div class="format-day-right">
-          <div class="format-day-type">Two-man scramble</div>
-          <div class="format-day-desc">1 point per match · Matchups by captains, tier combination must be matched</div>
-          <div class="tee-times">
-            <span class="tee-time">10:00 am</span><span class="tee-time">10:10 am</span><span class="tee-time">10:20 am</span>
-            <span class="tee-time">10:30 am</span><span class="tee-time">10:40 am</span><span class="tee-time">10:50 am</span>
-          </div>
-          <div class="format-day-desc" style="margin-top: 1.75rem; color: var(--text-tertiary)"><strong>Break</strong> · ~3:00 – 4:00 pm · Evergreen Golf Course</div>
-          <div class="format-day-desc" style="margin-top: 1.75rem; color: var(--text-tertiary)"><strong>Shuttle to Rolling Pines</strong><br>First 12: Evergreen 4:00 pm → Rolling Pines 4:15 pm<br>Second 12: Evergreen 4:30 pm → Rolling Pines 4:45 pm</div>
-          <div class="format-day-type" style="margin-top: 1.75rem">Four-man scramble (Rolling Pines Golf Course)</div>
-          <div class="format-day-desc">1 point per match · Matchups tier vs. tier · Going off as 8-somes</div>
-          <div class="matchups">
-            <div class="matchup"><span class="matchup-time">4:50 pm</span><span class="matchup-teams">Tier 1 vs. Tier 1</span></div>
-            <div class="matchup"><span class="matchup-time">5:00 pm</span><span class="matchup-teams">Tier 2 vs. Tier 2</span></div>
-            <div class="matchup"><span class="matchup-time">5:10 pm</span><span class="matchup-teams">Tier 3 vs. Tier 3</span></div>
-          </div>
-          <div class="format-day-desc" style="margin-top: 1.75rem; color: var(--text-tertiary)"><strong>Ride home</strong><br>First 12: Rolling Pines 7:15 pm → Reel Em Inn Cabin<br>Second 12: Rolling Pines 7:45 pm → Reel Em Inn Cabin</div>
-        </div>
-      </div>
-      <div class="format-day">
-        <div>
-          <div class="format-day-name">Sunday</div>
-          <div class="format-day-date">September 6</div>
-        </div>
-        <div class="format-day-right">
-          <div class="format-day-type">Best ball + individual head-to-head</div>
-          <div class="format-day-desc">1 point per best ball · 0.5 points per individual · Matchups by draft order</div>
-          <div class="tee-times">
-            <span class="tee-time">10:00 am</span><span class="tee-time">10:10 am</span><span class="tee-time">10:20 am</span>
-            <span class="tee-time">10:30 am</span><span class="tee-time">10:40 am</span><span class="tee-time">10:50 am</span>
+      </details>
+      <details class="day-acc">
+        <summary>
+          <span class="day-acc-info">
+            <span class="format-day-name">Saturday</span>
+            <span class="format-day-date">September 5 · Two-man + four-man scramble</span>
+          </span>
+          <span class="acc-marker">▾</span>
+        </summary>
+        <div class="day-acc-body">
+          <div class="format-day-right">
+            <div class="format-day-type">Two-man scramble</div>
+            <div class="format-day-desc">1 point per match · Matchups by captains, tier combination must be matched</div>
+            <div class="tee-times">
+              <span class="tee-time">10:00 am</span><span class="tee-time">10:10 am</span><span class="tee-time">10:20 am</span>
+              <span class="tee-time">10:30 am</span><span class="tee-time">10:40 am</span><span class="tee-time">10:50 am</span>
+            </div>
+            <div class="format-day-desc" style="margin-top: 1.75rem; color: var(--text-tertiary)"><strong>Break</strong> · ~3:00 – 4:00 pm · Evergreen Golf Course</div>
+            <div class="format-day-desc" style="margin-top: 1.75rem; color: var(--text-tertiary)"><strong>Shuttle to Rolling Pines</strong><br>First 12: Evergreen 4:00 pm → Rolling Pines 4:15 pm<br>Second 12: Evergreen 4:30 pm → Rolling Pines 4:45 pm</div>
+            <div class="format-day-type" style="margin-top: 1.75rem">Four-man scramble (Rolling Pines Golf Course)</div>
+            <div class="format-day-desc">1 point per match · Matchups tier vs. tier · Going off as 8-somes</div>
+            <div class="matchups">
+              <div class="matchup"><span class="matchup-time">4:50 pm</span><span class="matchup-teams">Tier 1 vs. Tier 1</span></div>
+              <div class="matchup"><span class="matchup-time">5:00 pm</span><span class="matchup-teams">Tier 2 vs. Tier 2</span></div>
+              <div class="matchup"><span class="matchup-time">5:10 pm</span><span class="matchup-teams">Tier 3 vs. Tier 3</span></div>
+            </div>
+            <div class="format-day-desc" style="margin-top: 1.75rem; color: var(--text-tertiary)"><strong>Ride home</strong><br>First 12: Rolling Pines 7:15 pm → Reel Em Inn Cabin<br>Second 12: Rolling Pines 7:45 pm → Reel Em Inn Cabin</div>
           </div>
         </div>
-      </div>
+      </details>
+      <details class="day-acc">
+        <summary>
+          <span class="day-acc-info">
+            <span class="format-day-name">Sunday</span>
+            <span class="format-day-date">September 6 · Best ball + singles</span>
+          </span>
+          <span class="acc-marker">▾</span>
+        </summary>
+        <div class="day-acc-body">
+          <div class="format-day-right">
+            <div class="format-day-type">Best ball + individual head-to-head</div>
+            <div class="format-day-desc">1 point per best ball · 0.5 points per individual · Matchups by draft order</div>
+            <div class="tee-times">
+              <span class="tee-time">10:00 am</span><span class="tee-time">10:10 am</span><span class="tee-time">10:20 am</span>
+              <span class="tee-time">10:30 am</span><span class="tee-time">10:40 am</span><span class="tee-time">10:50 am</span>
+            </div>
+          </div>
+        </div>
+      </details>
     </div>
     </div>
   </details>
