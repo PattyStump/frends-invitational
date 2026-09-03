@@ -48,6 +48,11 @@
     }
     .home-link:hover { border-color: var(--amber); color: var(--amber); }
     .home-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+    .home-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--text); color: #fff; font-size: 14px; font-weight: 500; padding: 13px 24px; border-radius: 99px; text-decoration: none; transition: background 0.15s; }
+    .home-cta:hover { background: var(--amber); }
+    .home-secondary { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .home-secondary a { font-size: 13px; color: var(--text-tertiary); text-decoration: none; border-bottom: 0.5px solid var(--border); padding-bottom: 2px; transition: color 0.15s, border-color 0.15s; }
+    .home-secondary a:hover { color: var(--amber); border-color: var(--amber); }
 
     .countdown { margin-bottom: 2.5rem; }
     .cd-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 1rem; }
@@ -78,9 +83,9 @@
 
 <main class="page">
   <div class="home-hero">
-    <div class="home-eyebrow">Est. 2022</div>
+    <div class="home-eyebrow">Sixth Annual · Sept 4 – 7, 2026</div>
     <div class="home-title">Frends<br>Invitational</div>
-    <div class="home-desc">A Ryder Cup-style golf tournament among friends. Five years of match play, scrambles, and best balls across courses in Western Canada.</div>
+    <div class="home-desc">A Ryder Cup-style golf tournament among friends. The sixth edition tees off this September at Evergreen — match play, scrambles, and best balls.</div>
     <div class="countdown">
       <div class="cd-label" id="cd-label">First tee · Friday, Sept 4 · 1:00 PM</div>
       <div class="cd-grid">
@@ -90,10 +95,10 @@
         <div class="cd-unit"><span class="cd-num" id="cd-secs">--</span><span class="cd-unit-label">Sec</span></div>
       </div>
     </div>
-    <div class="home-links">
-      <a class="home-link" href="2026.html">2026 tournament →</a>
-      <a class="home-link" href="stats/index.html">All-time leaderboard →</a>
-      <a class="home-link" href="stats/player.html">Player profiles →</a>
+    <a class="home-cta" href="2026.html">Explore the 2026 tournament →</a>
+    <div class="home-secondary">
+      <a href="stats/index.html">All-time leaderboard</a>
+      <a href="stats/player.html">Player profiles</a>
     </div>
   </div>
 </main>
