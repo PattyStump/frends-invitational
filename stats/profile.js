@@ -7,6 +7,9 @@ const PHOTOS = {};
 let ALL_MATCHES = [];
 let ROSTERS = null;
 
+// Rostered pairings for the upcoming tournament that haven't been played yet (outcome TBD).
+const UPCOMING_PARTNERS = { 'E. Mearns': ['R. Nieman'] };
+
 function handlePhoto(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -99,9 +102,7 @@ function renderProfile(player) {
     .filter(x => x.tot > 0)
     .sort((a, b) => b.pct - a.pct || b.tot - a.tot);
 
-  const partnersHTML = !partnerArr.length
-    ? '<div class="no-data">No paired match data</div>'
-    : partnerArr.slice(0, 8).map(p2 => {
+  const playedHTML = partnerArr.slice(0, 8).map(p2 => {
       const col = colorP(p2.pct);
       const parts = [];
       if (p2.scramble > 0) parts.push(`${p2.scramble} scramble`);
@@ -113,6 +114,18 @@ function renderProfile(player) {
         <span class="partner-pct" style="color:${col}">${p2.pct}%</span>
       </div>`;
     }).join('');
+
+  const upcoming = UPCOMING_PARTNERS[player] || [];
+  const upcomingHTML = upcoming.map(name => `<div class="partner-row">
+        <span class="partner-name">${name}</span>
+        <span class="partner-detail">Upcoming · Friday scramble</span>
+        <span class="partner-rec">TBD</span>
+        <span class="partner-pct" style="color:var(--text-tertiary)">—</span>
+      </div>`).join('');
+
+  const partnersHTML = (!partnerArr.length && !upcoming.length)
+    ? '<div class="no-data">No paired match data</div>'
+    : playedHTML + upcomingHTML;
 
   const days = ['Fri', 'Sat', 'Sun'];
   const fmtLabel = { scramble: 'Scramble', singles: 'Singles', 'best ball': 'Best ball' };
