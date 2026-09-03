@@ -10,6 +10,9 @@ const DATA_FILES = [
 const ALIAS = { 'Ta. Verma': 'T. Verma' };
 function can(n) { return ALIAS[n] || n; }
 
+// Rostered players who have not yet played a match — still get a profile / leaderboard row at 0-0-0.
+const EXTRA_PLAYERS = ['E. Mearns'];
+
 async function loadAllMatches() {
   const results = await Promise.all(
     DATA_FILES.map(f => fetch(f).then(r => r.text()))
@@ -36,7 +39,7 @@ async function loadAllMatches() {
 }
 
 function allPlayers(ms) {
-  const s = new Set();
+  const s = new Set(EXTRA_PLAYERS);
   ms.forEach(m => [m.wA, m.wB, m.lA, m.lB].forEach(p => { if (p) s.add(p); }));
   return [...s].sort();
 }
