@@ -158,17 +158,25 @@ document.addEventListener('click', function(e){
   resize(); addEventListener('resize', resize);
   var colors=['#EF9F27','#E5484D','#1D9E75','#3E7BFA','#F0C000','#E93D82','#8E4EC6'];
   var shells=[], sparks=[], running=false;
-  function launch(){
-    var ox=innerWidth/2, oy=innerHeight-6;              // tipped canister at bottom-centre
-    var n=6+Math.floor(Math.random()*8);               // 6-13 shells per click
-    for(var i=0;i<n;i++){
-      var ang=(-170+Math.random()*160)*Math.PI/180;    // wild, sporadic upward-ish spread
-      var spd=6+Math.random()*8;
-      shells.push({x:ox,y:oy,px:ox,py:oy,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,fuse:22+Math.random()*45,color:colors[(Math.random()*colors.length)|0]});
+  function ensure(){ if(!running){ running=true; requestAnimationFrame(tick); } }
+  function spawnShell(){
+    var ox=innerWidth/2 + (Math.random()*160-80);      // canister flailing near bottom-centre
+    var oy=innerHeight-6;
+    var ang=(-180+Math.random()*180)*Math.PI/180;      // anywhere across the upper arc — lots veer sideways/low
+    var spd=5+Math.random()*9;
+    shells.push({x:ox,y:oy,px:ox,py:oy,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,
+      fuse:18+Math.random()*72,                         // some pop quick, some streak right across first
+      color:colors[(Math.random()*colors.length)|0]});
+  }
+  function cake(){                                      // one tipped-over cake: a sporadic multi-second barrage
+    var shots=16+Math.floor(Math.random()*18), t=0;
+    for(var i=0;i<shots;i++){
+      t+=40+Math.random()*230;                          // irregular gaps between shots
+      setTimeout(function(){ var k=1+Math.floor(Math.random()*2); for(var j=0;j<k;j++) spawnShell(); ensure(); }, t);
     }
   }
   function explode(s){
-    var m=26+Math.floor(Math.random()*30);
+    var m=24+Math.floor(Math.random()*30);
     for(var i=0;i<m;i++){
       var a=Math.random()*Math.PI*2, sp=1+Math.random()*4.5;
       sparks.push({x:s.x,y:s.y,px:s.x,py:s.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:1,decay:0.008+Math.random()*0.018,color:s.color});
@@ -176,12 +184,18 @@ document.addEventListener('click', function(e){
   }
   function tick(){
     ctx.clearRect(0,0,innerWidth,innerHeight);
-    ctx.lineCap='round'; ctx.lineWidth=2.4;
+    ctx.lineCap='round'; ctx.lineWidth=2.6;
     for(var i=shells.length-1;i>=0;i--){
-      var s=shells[i]; s.px=s.x; s.py=s.y; s.vy+=0.12; s.x+=s.vx; s.y+=s.vy; s.fuse--;
+      var s=shells[i]; s.px=s.x; s.py=s.y;
+      s.vx+=(Math.random()-0.5)*0.5;                    // erratic, off-course wobble
+      s.vy+=(Math.random()-0.5)*0.5 + 0.09;             // wobble + gravity
+      s.x+=s.vx; s.y+=s.vy; s.fuse--;
       ctx.globalAlpha=1; ctx.strokeStyle=s.color;
       ctx.beginPath(); ctx.moveTo(s.px,s.py); ctx.lineTo(s.x,s.y); ctx.stroke();
-      if(s.fuse<=0 || s.y>innerHeight){ explode(s); shells.splice(i,1); }
+      ctx.globalAlpha=0.9; ctx.fillStyle='#fff';
+      ctx.beginPath(); ctx.arc(s.x,s.y,1.6,0,6.2832); ctx.fill();
+      var gone = s.x<-30 || s.x>innerWidth+30 || s.y>innerHeight+30;
+      if(s.fuse<=0 || gone){ if(!gone) explode(s); shells.splice(i,1); }
     }
     ctx.lineWidth=1.8;
     for(var j=sparks.length-1;j>=0;j--){
@@ -194,7 +208,7 @@ document.addEventListener('click', function(e){
     if(shells.length||sparks.length){ requestAnimationFrame(tick); }
     else { running=false; ctx.clearRect(0,0,innerWidth,innerHeight); }
   }
-  addEventListener('click', function(){ launch(); if(!running){ running=true; requestAnimationFrame(tick); } });
+  addEventListener('click', cake);
 })();
 </script>
 </body>
