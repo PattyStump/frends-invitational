@@ -5,6 +5,7 @@ const DATA_FILES = [
   'data/2023master.csv',
   'data/2024master.csv',
   'data/2025master.csv',
+  'data/2026master.csv',
 ];
 
 const ALIAS = { 'Ta. Verma': 'T. Verma' };

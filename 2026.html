@@ -43,6 +43,12 @@
     .sb-team-name { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); text-align: center; }
     .sb-score { font-family: 'DM Serif Display', serif; font-size: 60px; line-height: 1; color: var(--text); }
     .sb-vs { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); }
+    .sb-needs { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); margin-top: 8px; }
+    .sb-bar { position: relative; display: flex; height: 8px; margin-top: 1.5rem; border-radius: 99px; background: var(--bg-secondary); border: 0.5px solid var(--border); overflow: hidden; }
+    .sb-bar-d { background: var(--text); }
+    .sb-bar-w { background: var(--amber); margin-left: auto; }
+    .sb-clinch { position: absolute; left: 50%; top: 0; bottom: 0; width: 1.5px; background: var(--text-tertiary); transform: translateX(-50%); }
+    .sb-goal { text-align: center; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); margin-top: 0.9rem; }
 
     .t-section { padding: 3rem 0; border-bottom: 0.5px solid var(--border); }
     .t-section:last-child { border-bottom: none; }
@@ -142,13 +148,17 @@
       <div class="sb-team">
         <div class="sb-team-name">Team Dumas</div>
         <div class="sb-score">0</div>
+        <div class="sb-needs">needs 14</div>
       </div>
       <div class="sb-vs">vs</div>
       <div class="sb-team">
         <div class="sb-team-name">Team Walker</div>
         <div class="sb-score">0</div>
+        <div class="sb-needs">needs 14</div>
       </div>
     </div>
+    <div class="sb-bar"><div class="sb-bar-d" style="width:0%"></div><div class="sb-bar-w" style="width:0%"></div><div class="sb-clinch"></div></div>
+    <div class="sb-goal">14 points to win · 27 in play</div>
   </div>
 
   <details class="acc">
