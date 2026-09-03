@@ -65,6 +65,11 @@
     .format-day-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px; }
     .tee-times { display: flex; flex-wrap: wrap; gap: 6px; }
     .tee-time { font-size: 11px; padding: 3px 9px; border-radius: 99px; border: 0.5px solid var(--border-mid); color: var(--text-secondary); background: var(--bg-secondary); }
+    .matchups { display: flex; flex-direction: column; }
+    .matchup { display: grid; grid-template-columns: 70px 1fr; gap: 14px; align-items: baseline; padding: 7px 0; border-bottom: 0.5px solid var(--border); }
+    .matchup:last-child { border-bottom: none; }
+    .matchup-time { font-size: 11px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .matchup-teams { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
 
     .payment-block { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
     .payment-amount { font-family: 'DM Serif Display', serif; font-size: 56px; font-weight: 400; color: var(--text); letter-spacing: -1.5px; }
@@ -220,9 +225,13 @@
         <div class="format-day-right">
           <div class="format-day-type">Two-man scramble</div>
           <div class="format-day-desc">1 point per match · Matchups by captains, tier combination must be matched</div>
-          <div class="tee-times">
-            <span class="tee-time">1:00 pm</span><span class="tee-time">1:10 pm</span><span class="tee-time">1:20 pm</span>
-            <span class="tee-time">1:30 pm</span><span class="tee-time">1:40 pm</span><span class="tee-time">1:50 pm</span>
+          <div class="matchups">
+            <div class="matchup"><span class="matchup-time">1:00 pm</span><span class="matchup-teams">Spencer Ewen &amp; Ridge Brooks vs. Colin Fraser &amp; Ty McLean</span></div>
+            <div class="matchup"><span class="matchup-time">1:10 pm</span><span class="matchup-teams">Jesse Ross &amp; Taijal Verma vs. Derek Epp &amp; Derek Dumas</span></div>
+            <div class="matchup"><span class="matchup-time">1:20 pm</span><span class="matchup-teams">Ryan Nieman &amp; Eli Mearns vs. Owen Goosen &amp; Michael Baker</span></div>
+            <div class="matchup"><span class="matchup-time">1:30 pm</span><span class="matchup-teams">Zach Yuzdepski &amp; Kole Mackinnon vs. Matt Baker &amp; Ty Gitzel</span></div>
+            <div class="matchup"><span class="matchup-time">1:40 pm</span><span class="matchup-teams">Derek Dittmer &amp; Trent Walker vs. Wyatt Schlosser &amp; Ty Banks</span></div>
+            <div class="matchup"><span class="matchup-time">1:50 pm</span><span class="matchup-teams">Joel Woods &amp; Neelan Verma vs. Brandon Dazzan &amp; Tyson Pylypow</span></div>
           </div>
         </div>
       </div>
