@@ -173,9 +173,9 @@ document.addEventListener('click', function(e){
     var ox=o.x + (Math.random()*36-18);                // tight jitter around the canister mouth
     var oy=o.y + (Math.random()*10-5);
     var ang=(-180+Math.random()*180)*Math.PI/180;      // anywhere across the upper arc — lots veer sideways/low
-    var spd=5+Math.random()*9;
+    var spd=8+Math.random()*8;                          // fast enough to carry to the page edges
     shells.push({x:ox,y:oy,px:ox,py:oy,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,
-      fuse:18+Math.random()*72,                         // some pop quick, some streak right across first
+      fuse:80+Math.random()*100, edge:null,             // fuse is only a fallback — they burst at the edges
       color:colors[(Math.random()*colors.length)|0]});
   }
   function cake(){                                      // one tipped-over cake: a sporadic multi-second barrage
@@ -195,17 +195,27 @@ document.addEventListener('click', function(e){
   function tick(){
     ctx.clearRect(0,0,innerWidth,innerHeight);
     ctx.lineCap='round'; ctx.lineWidth=2.6;
+    var m=10;                                           // burst just inside the edge so it stays visible
     for(var i=shells.length-1;i>=0;i--){
       var s=shells[i]; s.px=s.x; s.py=s.y;
-      s.vx+=(Math.random()-0.5)*0.5;                    // erratic, off-course wobble
-      s.vy+=(Math.random()-0.5)*0.5 + 0.09;             // wobble + gravity
-      s.x+=s.vx; s.y+=s.vy; s.fuse--;
+      if(s.edge==null){
+        s.vx+=(Math.random()-0.5)*0.45;                 // erratic, off-course wobble
+        s.vy+=(Math.random()-0.5)*0.45 + 0.05;          // wobble + light gravity
+        s.x+=s.vx; s.y+=s.vy; s.fuse--;
+        if(s.x<=m || s.x>=innerWidth-m || s.y<=m || s.y>=innerHeight-m || s.fuse<=0){
+          s.x=Math.max(m,Math.min(innerWidth-m,s.x));   // pin to the edge it hit
+          s.y=Math.max(m,Math.min(innerHeight-m,s.y));
+          s.edge=6+Math.floor(Math.random()*16);        // brief delay, then it bursts
+          s.vx*=0.15; s.vy*=0.15;
+        }
+      } else {
+        s.x+=s.vx; s.y+=s.vy; s.edge--;
+      }
       ctx.globalAlpha=1; ctx.strokeStyle=s.color;
       ctx.beginPath(); ctx.moveTo(s.px,s.py); ctx.lineTo(s.x,s.y); ctx.stroke();
       ctx.globalAlpha=0.9; ctx.fillStyle='#fff';
-      ctx.beginPath(); ctx.arc(s.x,s.y,1.6,0,6.2832); ctx.fill();
-      var gone = s.x<-30 || s.x>innerWidth+30 || s.y>innerHeight+30;
-      if(s.fuse<=0 || gone){ if(!gone) explode(s); shells.splice(i,1); }
+      ctx.beginPath(); ctx.arc(s.x,s.y,1.7,0,6.2832); ctx.fill();
+      if(s.edge!=null && s.edge<=0){ explode(s); shells.splice(i,1); }
     }
     ctx.lineWidth=1.8;
     for(var j=sparks.length-1;j>=0;j--){
