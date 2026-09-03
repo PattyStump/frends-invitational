@@ -36,6 +36,14 @@
     .hero-meta-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); }
     .hero-meta-value { font-size: 15px; color: var(--text); }
 
+    .scoreboard { padding: 2.25rem 0; border-bottom: 0.5px solid var(--border); }
+    .sb-eyebrow { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-tertiary); text-align: center; margin-bottom: 1.5rem; }
+    .sb-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1.5rem; }
+    .sb-team { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .sb-team-name { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); text-align: center; }
+    .sb-score { font-family: 'DM Serif Display', serif; font-size: 60px; line-height: 1; color: var(--text); }
+    .sb-vs { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); }
+
     .t-section { padding: 3rem 0; border-bottom: 0.5px solid var(--border); }
     .t-section:last-child { border-bottom: none; }
     .t-section-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 1.75rem; }
@@ -88,6 +96,8 @@
 
     @media (max-width: 600px) {
       .hero-title { font-size: 48px; }
+      .sb-score { font-size: 48px; }
+      .sb-row { gap: 1rem; }
       .format-day { grid-template-columns: 1fr; }
       .details-grid { grid-template-columns: 1fr; }
       .details-grid.teams-grid { grid-template-columns: 1fr 1fr; }
@@ -125,6 +135,21 @@
       <div class="hero-meta-item"><span class="hero-meta-label">Course</span><span class="hero-meta-value">Evergreen Golf Course</span></div>
       <div class="hero-meta-item"><span class="hero-meta-label">Location</span><span class="hero-meta-value">Nipawin, Saskatchewan</span></div>
       <div class="hero-meta-item"><span class="hero-meta-label">Cost</span><span class="hero-meta-value">$580 per person</span></div>
+    </div>
+  </div>
+
+  <div class="scoreboard">
+    <div class="sb-eyebrow">Standings</div>
+    <div class="sb-row">
+      <div class="sb-team">
+        <div class="sb-team-name">Team Dumas</div>
+        <div class="sb-score">0</div>
+      </div>
+      <div class="sb-vs">vs</div>
+      <div class="sb-team">
+        <div class="sb-team-name">Team Walker</div>
+        <div class="sb-score">0</div>
+      </div>
     </div>
   </div>
 
