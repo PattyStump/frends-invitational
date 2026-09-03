@@ -41,7 +41,45 @@ So editing a CSV is what "regenerates" the stats — there is nothing else to up
   initial even if multiple players share it (e.g. T. Pylypow, T. Banks, T. Walker all
   stay as T. since their last names differ).
 - Team names by year: 2022 Team Ma. Baker vs Team Yuzdepski; 2023 Team D. Dittmer vs
-  Team O. Goosen; 2024 Team J. Woods vs Team B. Dazzan; 2025 Team J. Ross vs Team R. Nieman.
+  Team O. Goosen; 2024 Team J. Woods vs Team B. Dazzan; 2025 Team J. Ross vs Team R. Nieman;
+  2026 Team Dumas (captain D. Dumas) vs Team Walker (captain T. Walker).
+
+## 2026 SEASON (conventions — read before entering any 2026 results)
+- Teams: Team Dumas (D. Dumas) vs Team Walker (T. Walker). 24 players; the rosters and
+  draft tiers live in the 2026.html "Teams" section (each team = 4 per tier, tiers 1-3).
+- Data file: `stats/data/2026master.csv` (already registered in DATA_FILES in data.js).
+  Editing it is what updates records, profiles, and the all-time leaderboard.
+- NON-STANDARD FORMAT — 5 events, but individual records count only 4 matches/player:
+  - Fri: 2-man scramble, Evergreen, 6 matches (tee 1:00-1:50 pm)
+  - Sat AM: 2-man scramble, Evergreen, 6 matches (10:00-10:50 am)
+  - Sat PM: 4-man scramble, ROLLING PINES (different course), 8-somes, 3 matches, tier
+    vs tier (4:50/5:00/5:10 pm)
+  - Sun: best ball + individual singles, Evergreen (10:00-10:50 am).
+    [Confirm exact counts before Sunday scoring — assumed ~6 best ball + ~12 singles.]
+- FOUR-MAN SCRAMBLE = TEAM POINTS ONLY. Do NOT put its players in individual records.
+  Log each four-man match as a POINTS-ONLY CSV row: fill team_a/pts_team_a and
+  team_b/pts_team_b, leave all four player columns (winner_a/b, loser_a/b) BLANK. Blank
+  player rows are ignored by allPlayers()/computePlayerStats() (records unaffected) but
+  their points still count in the team-title sum. So each player's 2026 record must
+  verify to W+L+T = 4 (Fri, Sat AM, Sun best ball, Sun singles), NOT 5.
+- POINTS: 1 per match, EXCEPT Sunday singles = 0.5. Ties split 0.5/0.5. Total in play =
+  27 -> 14 to win (13.5 apiece = tie).
+- SCOREBOARD (2026.html, Ryder Cup style, updated by hand from entered results): each
+  side's score, "needs X to win" (= 14 - score), a race bar (fill widths = pts/27, clinch
+  line at centre), and the "14 points to win / 27 in play" caption.
+- MATCH OUTCOMES in the Matches area (2026.html, display only — not read from the CSV):
+  - 2-man / best ball / singles: winning pair BOLD (.mp-win), losing pair dimmed
+    (.mp-lose), margin (e.g. 4&3, 1 up) in green (.mp-res) beside the winner; ties show
+    "Halved" (.mp-res.halved).
+  - Four-man: shown per tier as Team Dumas vs Team Walker, winner bold + margin beside;
+    tie = Halved.
+- NEW PLAYER: Eli Mearns ("E. Mearns") — added via EXTRA_PLAYERS in data.js so he gets a
+  0-0-0 profile/leaderboard row before playing. UPCOMING_PARTNERS in profile.js shows his
+  TBD Friday partner (R. Nieman); remove him from UPCOMING_PARTNERS once that match is
+  entered.
+- DAILY LOOP: caller gives winners + margins (+ "halved" for ties) -> enter that day's
+  rows in 2026master.csv (read back, verify W+L+T per player and the day's point totals)
+  -> update the scoreboard + Matches outcomes in 2026.html -> preview -> push.
 
 ## WORKFLOW RULES (how I like to work)
 - One change at a time. Build it, let me verify it in the browser, THEN move on. Don't
