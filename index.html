@@ -48,6 +48,13 @@
     }
     .home-link:hover { border-color: var(--amber); color: var(--amber); }
     .home-links { display: flex; gap: 2rem; flex-wrap: wrap; }
+
+    .countdown { margin-bottom: 2.5rem; }
+    .cd-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 1rem; }
+    .cd-grid { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .cd-unit { display: flex; flex-direction: column; align-items: center; min-width: 68px; padding: 0.9rem 0.6rem; border: 0.5px solid var(--border); border-radius: var(--radius-lg); background: #fff; }
+    .cd-num { font-family: 'DM Serif Display', serif; font-size: 38px; line-height: 1; color: var(--text); font-variant-numeric: tabular-nums; }
+    .cd-unit-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -74,6 +81,15 @@
     <div class="home-eyebrow">Est. 2022</div>
     <div class="home-title">Frends<br>Invitational</div>
     <div class="home-desc">A Ryder Cup-style golf tournament among friends. Five years of match play, scrambles, and best balls across courses in Western Canada.</div>
+    <div class="countdown">
+      <div class="cd-label" id="cd-label">First tee · Friday, Sept 4 · 1:00 PM</div>
+      <div class="cd-grid">
+        <div class="cd-unit"><span class="cd-num" id="cd-days">--</span><span class="cd-unit-label">Days</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-hours">--</span><span class="cd-unit-label">Hours</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-mins">--</span><span class="cd-unit-label">Min</span></div>
+        <div class="cd-unit"><span class="cd-num" id="cd-secs">--</span><span class="cd-unit-label">Sec</span></div>
+      </div>
+    </div>
     <div class="home-links">
       <a class="home-link" href="2026.html">2026 tournament →</a>
       <a class="home-link" href="stats/index.html">All-time leaderboard →</a>
@@ -98,6 +114,33 @@ document.addEventListener('click', function(e){
     nav.style.display = 'none';
   }
 });
+
+(function(){
+  var target = new Date('2026-09-04T13:00:00-06:00').getTime(); // Fri Sept 4, 2026, 1:00 PM CST (Saskatchewan)
+  var d = document.getElementById('cd-days'),
+      h = document.getElementById('cd-hours'),
+      m = document.getElementById('cd-mins'),
+      s = document.getElementById('cd-secs');
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  var timer;
+  function tick(){
+    var diff = target - Date.now();
+    if(diff <= 0){
+      d.textContent = '0'; h.textContent = '00'; m.textContent = '00'; s.textContent = '00';
+      var lbl = document.getElementById('cd-label');
+      if(lbl){ lbl.textContent = 'The Frends Invitational is underway'; }
+      clearInterval(timer);
+      return;
+    }
+    var t = Math.floor(diff / 1000);
+    d.textContent = Math.floor(t / 86400);
+    h.textContent = pad(Math.floor((t % 86400) / 3600));
+    m.textContent = pad(Math.floor((t % 3600) / 60));
+    s.textContent = pad(t % 60);
+  }
+  tick();
+  timer = setInterval(tick, 1000);
+})();
 </script>
 </body>
 </html>
