@@ -71,17 +71,20 @@
     .matchup-time { font-size: 11px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; white-space: nowrap; }
     .matchup-teams { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
 
-    .payment-block { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
-    .payment-amount { font-family: 'DM Serif Display', serif; font-size: 56px; font-weight: 400; color: var(--text); letter-spacing: -1.5px; }
-    .payment-box { padding: 12px 16px; border: 0.5px solid var(--border); border-radius: var(--radius); background: var(--bg-secondary); }
-    .payment-box-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 4px; }
-    .payment-box-value { font-size: 14px; color: var(--text); }
-
     .pr-note { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin: -1rem 0 1.5rem; max-width: 56ch; }
     .pr-cap { color: var(--amber); font-weight: 500; }
     .team-tier { display: flex; align-items: center; gap: 10px; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; color: var(--text-tertiary); margin: 14px 0 6px; }
     .team-tier::after { content: ""; flex: 1; height: 0.5px; background: var(--border); }
     .team-tier:first-of-type { margin-top: 8px; }
+
+    .acc { border-bottom: 0.5px solid var(--border); }
+    .acc > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem 0; }
+    .acc > summary::-webkit-details-marker { display: none; }
+    .acc > summary:hover .acc-title { color: var(--amber); }
+    .acc-title { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--text); }
+    .acc-marker { color: var(--text-tertiary); font-size: 12px; line-height: 1; transition: transform .2s ease; }
+    .acc[open] > summary .acc-marker { transform: rotate(180deg); }
+    .acc-body { padding-bottom: 2.5rem; }
 
     @media (max-width: 600px) {
       .hero-title { font-size: 48px; }
@@ -125,8 +128,9 @@
     </div>
   </div>
 
-  <div class="t-section">
-    <div class="t-section-label">Captains</div>
+  <details class="acc" open>
+    <summary><span class="acc-title">Teams &amp; Captains</span><span class="acc-marker">▾</span></summary>
+    <div class="acc-body">
     <div class="captains-row">
       <div class="captain-card">
         <div class="captain-avatar">D</div>
@@ -137,11 +141,7 @@
         <div><a class="captain-name" href="stats/player.html?p=T.%20Walker">T. Walker</a><div class="captain-label">Team captain</div></div>
       </div>
     </div>
-  </div>
-
-  <div class="t-section">
-    <div class="t-section-label">Teams</div>
-    <p class="pr-note">The drafted rosters for 2026, grouped by draft tier.</p>
+      <p class="pr-note" style="margin-top: 2rem">The drafted rosters for 2026, grouped by draft tier.</p>
     <div class="details-grid teams-grid">
       <div class="detail-block">
         <div class="detail-block-label">Team Dumas</div>
@@ -192,10 +192,12 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
+  </details>
 
-  <div class="t-section">
-    <div class="t-section-label">Details</div>
+  <details class="acc">
+    <summary><span class="acc-title">Details</span><span class="acc-marker">▾</span></summary>
+    <div class="acc-body">
     <div class="details-grid">
       <div class="detail-block">
         <div class="detail-block-label">What's included</div>
@@ -215,10 +217,12 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
+  </details>
 
-  <div class="t-section">
-    <div class="t-section-label">Format</div>
+  <details class="acc">
+    <summary><span class="acc-title">Format</span><span class="acc-marker">▾</span></summary>
+    <div class="acc-body">
     <div class="format-days">
       <div class="format-day">
         <div>
@@ -277,10 +281,12 @@
         </div>
       </div>
     </div>
-  </div>
+    </div>
+  </details>
 
-  <div class="t-section">
-    <div class="t-section-label">Rules</div>
+  <details class="acc">
+    <summary><span class="acc-title">Rules</span><span class="acc-marker">▾</span></summary>
+    <div class="acc-body">
     <div class="detail-items">
       <div class="detail-item">Lost ball (water, woods, rough, etc.): drop where it went in and take a 1-stroke penalty. Keep pace.</div>
       <div class="detail-item">Frends don't let Frends 4-putt.</div>
@@ -290,18 +296,8 @@
       <div class="detail-item">In scrambles, use at least 2 tee shots from each partner on every nine.</div>
       <div class="detail-item">Lift, clean and place in the fairway; play it as it lies in the second cut or deeper.</div>
     </div>
-  </div>
-
-  <div class="t-section">
-    <div class="t-section-label">Payment</div>
-    <div class="payment-block">
-      <div class="payment-amount">$580</div>
-      <div class="payment-box">
-        <div class="payment-box-label">E-transfer to</div>
-        <div class="payment-box-value">ryanlnieman@gmail.com</div>
-      </div>
     </div>
-  </div>
+  </details>
 
 </main>
 
