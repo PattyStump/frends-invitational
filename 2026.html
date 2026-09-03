@@ -87,6 +87,8 @@
       .hero-title { font-size: 48px; }
       .format-day { grid-template-columns: 1fr; }
       .details-grid { grid-template-columns: 1fr; }
+      .details-grid.teams-grid { grid-template-columns: 1fr 1fr; }
+      .teams-grid .detail-block { padding: 1.1rem 0.85rem; }
       .m-pair { display: block; }
     }
   </style>
@@ -140,7 +142,7 @@
   <div class="t-section">
     <div class="t-section-label">Teams</div>
     <p class="pr-note">The drafted rosters for 2026, grouped by draft tier.</p>
-    <div class="details-grid">
+    <div class="details-grid teams-grid">
       <div class="detail-block">
         <div class="detail-block-label">Team Dumas</div>
         <div class="team-tier">Tier 1</div>
