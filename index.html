@@ -60,6 +60,9 @@
     .cd-unit { display: flex; flex-direction: column; align-items: center; min-width: 68px; padding: 0.9rem 0.6rem; border: 0.5px solid var(--border); border-radius: var(--radius-lg); background: #fff; }
     .cd-num { font-family: 'DM Serif Display', serif; font-size: 38px; line-height: 1; color: var(--text); font-variant-numeric: tabular-nums; }
     .cd-unit-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-top: 8px; }
+
+    .dumas-img { position: fixed; left: 50%; bottom: 0; transform: translateX(-50%); width: min(460px, 62vw); height: auto; z-index: 40; pointer-events: none; user-select: none; }
+    @media (max-width: 600px) { .dumas-img { width: 84vw; } }
   </style>
 </head>
 <body>
@@ -148,6 +151,7 @@ document.addEventListener('click', function(e){
 })();
 </script>
 
+<img id="dumasImg" class="dumas-img" src="dumas.png" alt="" aria-hidden="true">
 <canvas id="fx" aria-hidden="true" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999"></canvas>
 <script>
 (function(){
@@ -159,9 +163,15 @@ document.addEventListener('click', function(e){
   var colors=['#EF9F27','#E5484D','#1D9E75','#3E7BFA','#F0C000','#E93D82','#8E4EC6'];
   var shells=[], sparks=[], running=false;
   function ensure(){ if(!running){ running=true; requestAnimationFrame(tick); } }
+  function origin(){                                    // launch from the canister in the Dumas sketch
+    var el=document.getElementById('dumasImg');
+    if(el && el.getBoundingClientRect){ var r=el.getBoundingClientRect(); if(r.width) return {x:r.left+0.283*r.width, y:r.top+0.55*r.height}; }
+    return {x:innerWidth/2, y:innerHeight-6};
+  }
   function spawnShell(){
-    var ox=innerWidth/2 + (Math.random()*160-80);      // canister flailing near bottom-centre
-    var oy=innerHeight-6;
+    var o=origin();
+    var ox=o.x + (Math.random()*36-18);                // tight jitter around the canister mouth
+    var oy=o.y + (Math.random()*10-5);
     var ang=(-180+Math.random()*180)*Math.PI/180;      // anywhere across the upper arc — lots veer sideways/low
     var spd=5+Math.random()*9;
     shells.push({x:ox,y:oy,px:ox,py:oy,vx:Math.cos(ang)*spd,vy:Math.sin(ang)*spd,
