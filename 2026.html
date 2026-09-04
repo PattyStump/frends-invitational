@@ -84,6 +84,10 @@
     .matchup:last-child { border-bottom: none; }
     .matchup-time { font-size: 11px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; white-space: nowrap; }
     .matchup-teams { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .mp-win { font-weight: 600; color: var(--text); }
+    .mp-lose { color: var(--text-tertiary); }
+    .mp-res { color: #1D9E75; font-weight: 600; margin-left: 6px; }
+    .mp-res.halved { color: var(--text-tertiary); }
 
     .pr-note { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin: -1rem 0 1.5rem; max-width: 56ch; }
     .pr-cap { color: var(--amber); font-weight: 500; }
@@ -162,11 +166,11 @@
       <div class="sb-vs">vs</div>
       <div class="sb-team">
         <div class="sb-team-name">Team Walker</div>
-        <div class="sb-score">0</div>
-        <div class="sb-needs">needs 14</div>
+        <div class="sb-score">1</div>
+        <div class="sb-needs">needs 13</div>
       </div>
     </div>
-    <div class="sb-bar"><div class="sb-bar-d" style="width:0%"></div><div class="sb-bar-w" style="width:0%"></div><div class="sb-clinch"></div></div>
+    <div class="sb-bar"><div class="sb-bar-d" style="width:0%"></div><div class="sb-bar-w" style="width:3.7%"></div><div class="sb-clinch"></div></div>
     <div class="sb-goal">14 points to win · 27 in play</div>
   </div>
 
@@ -256,7 +260,7 @@
             <div class="matchups">
               <div class="matchup"><span class="matchup-time">1:00 pm</span><span class="matchup-teams"><span class="m-pair">S. Ewen &amp; R. Brooks</span> <span class="m-pair">vs. C. Fraser &amp; T. McLean</span></span></div>
               <div class="matchup"><span class="matchup-time">1:10 pm</span><span class="matchup-teams"><span class="m-pair">J. Ross &amp; T. Verma</span> <span class="m-pair">vs. D. Epp &amp; D. Dumas</span></span></div>
-              <div class="matchup"><span class="matchup-time">1:20 pm</span><span class="matchup-teams"><span class="m-pair">R. Nieman &amp; E. Mearns</span> <span class="m-pair">vs. O. Goosen &amp; Mi. Baker</span></span></div>
+              <div class="matchup"><span class="matchup-time">1:20 pm</span><span class="matchup-teams"><span class="m-pair mp-win">R. Nieman &amp; E. Mearns<span class="mp-res">3&amp;2</span></span> <span class="m-pair mp-lose">vs. O. Goosen &amp; Mi. Baker</span></span></div>
               <div class="matchup"><span class="matchup-time">1:30 pm</span><span class="matchup-teams"><span class="m-pair">Z. Yuzdepski &amp; K. MacKinnon</span> <span class="m-pair">vs. Ma. Baker &amp; T. Gitzel</span></span></div>
               <div class="matchup"><span class="matchup-time">1:40 pm</span><span class="matchup-teams"><span class="m-pair">D. Dittmer &amp; T. Walker</span> <span class="m-pair">vs. W. Schlosser &amp; T. Banks</span></span></div>
               <div class="matchup"><span class="matchup-time">1:50 pm</span><span class="matchup-teams"><span class="m-pair">J. Woods &amp; N. Verma</span> <span class="m-pair">vs. B. Dazzan &amp; T. Pylypow</span></span></div>
