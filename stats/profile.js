@@ -8,7 +8,7 @@ let ALL_MATCHES = [];
 let ROSTERS = null;
 
 // Rostered pairings for the upcoming tournament that haven't been played yet (outcome TBD).
-const UPCOMING_PARTNERS = { 'E. Mearns': ['R. Nieman'] };
+const UPCOMING_PARTNERS = {};
 
 function handlePhoto(e) {
   const file = e.target.files[0];
