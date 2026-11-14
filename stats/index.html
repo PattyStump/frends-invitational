@@ -49,7 +49,7 @@
 
   <div id="leaderboardView">
     <div class="page-title">All-time leaderboard</div>
-    <div class="page-subtitle">Ranked by career win % &middot; 2022–2025</div>
+    <div class="page-subtitle" id="boardSubtitle">Ranked by career win % &middot; 2022–2026</div>
     <div id="board"><div class="loading">Loading stats&hellip;</div></div>
   </div>
 
@@ -108,6 +108,13 @@ function closeProfile() {
   ALL_MATCHES = await loadAllMatches();
   ROSTERS = await loadRosters();
   const players = allPlayers(ALL_MATCHES);
+
+  // Derive the year span from the data so it cannot go stale when a year is added.
+  const yrs = ALL_MATCHES.map(m => m.year).filter(y => y);
+  const sub = document.getElementById('boardSubtitle');
+  if (sub && yrs.length) {
+    sub.textContent = `Ranked by career win % · ${Math.min(...yrs)}–${Math.max(...yrs)}`;
+  }
 
   // Populate the in-place profile panel's player dropdown.
   const sel = document.getElementById('playerSelect');
