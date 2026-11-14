@@ -64,8 +64,6 @@
 
     /* Photo gallery */
     .gallery { padding: 2.5rem 0 3rem; border-top: 0.5px solid var(--border); }
-    .gallery-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-                     color: var(--text-tertiary); margin-bottom: 1.25rem; }
     .gallery-grid { display: flex; flex-direction: column; gap: 1.9rem; }
     .gallery-item { margin: 0; }
     .gallery-caption { margin-top: 0.65rem; font-size: 12px; color: var(--text-tertiary); }
@@ -209,26 +207,25 @@
   </div>
 
   <section class="gallery">
-    <div class="gallery-label">The Frends</div>
     <div class="gallery-grid" id="galleryGrid">
       <figure class="gallery-item">
-        <img src="photos/2026.jpg" alt="Frends VI, 2026, Nipawin, Saskatchewan" loading="lazy" decoding="async" width="1050" height="1400">
+        <img src="photos/2026.jpg" alt="Frends VI, 2026, Nipawin, Saskatchewan" loading="lazy" decoding="async" width="1400" height="932" data-full="photos/full/2026.jpg">
         <figcaption class="gallery-caption"><span class="cap-year">2026</span> &middot; Frends VI &middot; Nipawin, SK</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="photos/2025.jpg" alt="Frends V, 2025, Kelowna, British Columbia" loading="lazy" decoding="async" width="1400" height="1050">
+        <img src="photos/2025.jpg" alt="Frends V, 2025, Kelowna, British Columbia" loading="lazy" decoding="async" width="1400" height="934" data-full="photos/full/2025.jpg">
         <figcaption class="gallery-caption"><span class="cap-year">2025</span> &middot; Frends V &middot; Kelowna, BC</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="photos/2024.jpg" alt="Frends IV, 2024, Candle Lake, Saskatchewan" loading="lazy" decoding="async" width="1400" height="1050">
+        <img src="photos/2024.jpg" alt="Frends IV, 2024, Candle Lake, Saskatchewan" loading="lazy" decoding="async" width="1400" height="932" data-full="photos/full/2024.jpg">
         <figcaption class="gallery-caption"><span class="cap-year">2024</span> &middot; Frends IV &middot; Candle Lake, SK</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="photos/2023.jpg" alt="Frends III, 2023, Elbow, Saskatchewan" loading="lazy" decoding="async" width="1400" height="1050">
+        <img src="photos/2023.jpg" alt="Frends III, 2023, Elbow, Saskatchewan" loading="lazy" decoding="async" width="1400" height="932" data-full="photos/full/2023.jpg">
         <figcaption class="gallery-caption"><span class="cap-year">2023</span> &middot; Frends III &middot; Elbow, SK</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="photos/2022.jpg" alt="Frends II, 2022, Jackfish Lake, Saskatchewan" loading="lazy" decoding="async" width="1050" height="1400" style="object-position: center 68%">
+        <img src="photos/2022.jpg" alt="Frends II, 2022, Jackfish Lake, Saskatchewan" loading="lazy" decoding="async" width="1400" height="934" data-full="photos/full/2022.jpg">
         <figcaption class="gallery-caption"><span class="cap-year">2022</span> &middot; Frends II &middot; Jackfish Lake, SK</figcaption>
       </figure>
     </div>
@@ -252,7 +249,7 @@
   }
   grid.addEventListener('click', function(e){
     var t = e.target;
-    if (t && t.tagName === 'IMG') open(t.getAttribute('src'), t.getAttribute('alt'));
+    if (t && t.tagName === 'IMG') open(t.getAttribute('data-full') || t.getAttribute('src'), t.getAttribute('alt'));
   });
   box.addEventListener('click', close);
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
