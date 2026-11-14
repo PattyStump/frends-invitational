@@ -76,6 +76,11 @@
     @keyframes introDot { 0%, 60%, 100% { opacity: 0.25; } 30% { opacity: 1; } }
     .intro-video { width: min(100% - 1rem, 720px); aspect-ratio: 832 / 464; object-fit: contain;
                    background: #000; border-radius: var(--radius-lg); display: block; }
+    .intro-tap { display: none; background: none; border: 0; cursor: pointer; font: inherit;
+                 font-size: 13px; color: var(--text); border-bottom: 0.5px solid var(--border-mid);
+                 padding: 0 0 2px; }
+    #intro.needs-tap .intro-tap { display: inline-block; }
+    #intro.needs-tap .intro-label { opacity: 0.35; }
     body.intro-lock { overflow: hidden; }
     @media (prefers-reduced-motion: reduce) { #intro { display: none; } }
   </style>
@@ -87,16 +92,20 @@
   <div class="intro-label">Loading<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></div>
   <video class="intro-video" id="introVideo" src="intro.mp4" poster="intro-poster.jpg"
          autoplay muted playsinline preload="auto" disablepictureinpicture></video>
+  <button class="intro-tap" type="button" id="introTap">Tap to play &rarr;</button>
 </div>
 <script>
 (function(){
   var el = document.getElementById('intro'),
       vid = document.getElementById('introVideo'),
-      done = false;
+      done = false, timer = null;
 
-  function dismiss(){
+  // markSeen only when the video actually finished. A failed attempt must NOT be
+  // recorded as watched, or every later load this session skips it too.
+  function dismiss(markSeen){
     if (done) return; done = true;
-    try { sessionStorage.setItem('fi_intro_seen', '1'); } catch (e) {}
+    clearTimeout(timer);
+    if (markSeen === true) { try { sessionStorage.setItem('fi_intro_seen', '1'); } catch (e) {} }
     try { vid.pause(); } catch (e) {}
     el.classList.add('is-gone');
     document.body.classList.remove('intro-lock');
@@ -109,18 +118,32 @@
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (seen || reduced) { el.style.display = 'none'; document.body.classList.remove('intro-lock'); done = true; return; }
 
+  function rearm(ms){ clearTimeout(timer); timer = setTimeout(function(){ dismiss(false); }, ms); }
+
   // No skip control by design: the video is meant to be watched through.
-  // Everything below is a FAILURE escape, not a skip — without them a viewer
-  // whose video never plays would be stuck on a blank screen with no way out.
-  vid.addEventListener('ended', dismiss);
-  vid.addEventListener('error', dismiss);
+  vid.addEventListener('ended', function(){ dismiss(true); });
+  vid.addEventListener('error', function(){ dismiss(false); });
+  vid.addEventListener('playing', function(){ el.classList.remove('needs-tap'); rearm(20000); });
 
-  // Autoplay can be refused (data saver, iOS Low Power Mode, policy) — never trap the viewer.
-  var p = vid.play();
-  if (p && typeof p.catch === 'function') { p.catch(dismiss); }
+  // Autoplay gets refused by iOS Low Power Mode, data saver and some policies, even for
+  // muted inline video. Offer a tap instead of silently skipping to the page.
+  function tryPlay(){
+    var p = vid.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(function(err){
+        // NotAllowedError means policy refused it and a tap WILL work. Any other
+        // rejection (bad file, aborted load) is a real failure — tapping cannot
+        // fix it, so let the viewer through instead of stranding them.
+        if (err && err.name === 'NotAllowedError') { el.classList.add('needs-tap'); rearm(60000); }
+        else { dismiss(false); }
+      });
+    }
+  }
+  document.getElementById('introTap').addEventListener('click', tryPlay);
+  tryPlay();
 
-  // Last resort: if 'ended' never arrives because playback stalled, leave anyway.
-  setTimeout(dismiss, 16000);
+  // Last resort: if playback never starts or stalls, do not trap the viewer.
+  rearm(16000);
 })();
 </script>
 
