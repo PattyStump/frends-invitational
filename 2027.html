@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2027 — Frends Invitational</title>
+  <link rel="icon" href="/frends-favicon.png" type="image/png">
+  <link rel="stylesheet" href="stats/style.css" />
+  <style>
+    .hero {
+      padding: 5rem 0 4rem;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 1.25rem;
+    }
+    .hero-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 72px;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: -2px;
+      line-height: 1;
+      margin-bottom: 2rem;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--text-secondary);
+    }
+    .hero-meta { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+    .hero-meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .hero-meta-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); }
+    .hero-meta-value { font-size: 15px; color: var(--text); }
+
+    .scoreboard { padding: 2.25rem 0; border-bottom: 0.5px solid var(--border); }
+    .sb-eyebrow { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-tertiary); text-align: center; margin-bottom: 1.5rem; }
+    .sb-row { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1.5rem; }
+    .sb-team { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .sb-team-name { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-secondary); text-align: center; }
+    .sb-score { font-family: 'DM Serif Display', serif; font-size: 60px; line-height: 1; color: var(--text); }
+    .sb-vs { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); }
+    .sb-needs { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-tertiary); margin-top: 8px; }
+    .sb-bar { position: relative; display: flex; height: 8px; margin-top: 1.5rem; border-radius: 99px; background: var(--bg-secondary); border: 0.5px solid var(--border); overflow: hidden; }
+    .sb-bar-d { background: var(--text); }
+    .sb-bar-w { background: var(--amber); margin-left: auto; }
+    .sb-clinch { position: absolute; left: 50%; top: 0; bottom: 0; width: 1.5px; background: var(--text-tertiary); transform: translateX(-50%); }
+    .sb-goal { text-align: center; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-tertiary); margin-top: 0.9rem; }
+
+    .t-section { padding: 3rem 0; border-bottom: 0.5px solid var(--border); }
+    .t-section:last-child { border-bottom: none; }
+    .t-section-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 1.75rem; }
+
+    .captains-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .captain-card { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 0.5px solid var(--border); border-radius: var(--radius-lg); background: #fff; }
+    .captain-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 16px; color: var(--text-tertiary); flex-shrink: 0; }
+    .captain-name { font-size: 14px; font-weight: 500; color: var(--text); text-decoration: none; }
+    a.captain-name:hover { color: var(--amber); }
+    .captain-label { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+
+    .details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .detail-block { background: #fff; padding: 1.5rem; }
+    .detail-block-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 1rem; }
+    .detail-items { display: flex; flex-direction: column; }
+    .detail-item { font-size: 13px; color: var(--text-secondary); line-height: 1.5; padding: 7px 0; border-bottom: 0.5px solid var(--border); }
+    .detail-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .detail-item:first-child { padding-top: 0; }
+
+    .format-days { display: flex; flex-direction: column; }
+    .format-day { display: grid; grid-template-columns: 140px 1fr; gap: 1.5rem; padding: 1.5rem 0; border-bottom: 0.5px solid var(--border); align-items: start; }
+    .format-day:last-child { border-bottom: none; }
+    .format-day-name { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 400; color: var(--text); }
+    .format-day-date { font-size: 11px; color: var(--text-tertiary); margin-top: 3px; }
+    .format-day-right { border-left: 0.5px solid var(--border); padding-left: 1.5rem; }
+    .format-day-type { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 5px; }
+    .format-day-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 10px; }
+    .tee-times { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tee-time { font-size: 11px; padding: 3px 9px; border-radius: 99px; border: 0.5px solid var(--border-mid); color: var(--text-secondary); background: var(--bg-secondary); }
+    .matchups { display: flex; flex-direction: column; }
+    .matchup { display: grid; grid-template-columns: 70px 1fr; gap: 14px; align-items: baseline; padding: 7px 0; border-bottom: 0.5px solid var(--border); }
+    .matchup:last-child { border-bottom: none; }
+    .matchup-time { font-size: 11px; color: var(--text-tertiary); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .matchup-teams { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    .mp-win { font-weight: 600; color: var(--text); }
+    .mp-lose { color: var(--text-tertiary); }
+    .mp-res { color: #1D9E75; font-weight: 600; margin-left: 6px; }
+    .mp-res.halved { color: var(--text-tertiary); }
+
+    .pr-note { font-size: 13px; color: var(--text-secondary); line-height: 1.55; margin: -1rem 0 1.5rem; max-width: 56ch; }
+    .pr-cap { color: var(--amber); font-weight: 500; }
+    .team-tier { display: flex; align-items: center; gap: 10px; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; color: var(--text-tertiary); margin: 14px 0 6px; }
+    .team-tier::after { content: ""; flex: 1; height: 0.5px; background: var(--border); }
+    .team-tier:first-of-type { margin-top: 8px; }
+
+    .acc { border-bottom: 0.5px solid var(--border); }
+    .acc > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.5rem 0; }
+    .acc > summary::-webkit-details-marker { display: none; }
+    .acc > summary:hover .acc-title { color: var(--amber); }
+    .acc-title { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--text); }
+    .acc-marker { color: var(--text-tertiary); font-size: 12px; line-height: 1; transition: transform .2s ease; }
+    .acc[open] > summary .acc-marker { transform: rotate(180deg); }
+    .acc-body { padding-bottom: 2.5rem; }
+
+    .day-acc { border-bottom: 0.5px solid var(--border); }
+    .day-acc:last-child { border-bottom: none; }
+    .day-acc > summary { list-style: none; cursor: pointer; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding: 1.4rem 0; }
+    .day-acc > summary::-webkit-details-marker { display: none; }
+    .day-acc > summary:hover .format-day-name { color: var(--amber); }
+    .day-acc-info { display: flex; align-items: baseline; gap: 0.85rem; flex-wrap: wrap; }
+    .day-acc[open] > summary .acc-marker { transform: rotate(180deg); }
+    .day-acc-body { padding: 0.25rem 0 2rem; }
+
+    @media (max-width: 600px) {
+      .hero-title { font-size: 48px; }
+      .sb-score { font-size: 48px; }
+      .sb-row { gap: 1rem; }
+      .format-day { grid-template-columns: 1fr; }
+      .details-grid { grid-template-columns: 1fr; }
+      .details-grid.teams-grid { grid-template-columns: 1fr 1fr; }
+      .teams-grid .detail-block { padding: 1.1rem 0.85rem; }
+      .m-pair { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">Frends Invitational
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="2027.html" class="active">2027</a>
+    <a href="2026.html">2026</a>
+    <a href="stats/index.html">Leaderboard</a>
+  </div>
+
+  <button class="nav-hamburger" onclick="toggleNav()" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div id="mobileNav" class="nav-mobile" style="display:none">
+  <a href="index.html">Home</a>
+  <a href="2027.html" class="active">2027</a>
+    <a href="2026.html">2026</a>
+  <a href="stats/index.html">Leaderboard</a>
+</div>
+
+<main class="page">
+
+  <div class="hero">
+    <div class="hero-eyebrow">Seventh Annual</div>
+    <div class="hero-title">Frends<br><em>Invitational</em></div>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="hero-meta-label">Dates</span><span class="hero-meta-value">Sept 3 &ndash; 6, 2027</span></div>
+      <div class="hero-meta-item"><span class="hero-meta-label">Course</span><span class="hero-meta-value">Northern Meadows</span></div>
+      <div class="hero-meta-item"><span class="hero-meta-label">Field</span><span class="hero-meta-value">24 golfers</span></div>
+    </div>
+  </div>
+
+  <details class="acc" open>
+    <summary><span class="acc-title">Format</span><span class="acc-marker">&#9662;</span></summary>
+    <div class="acc-body">
+    <div class="format-day-desc" style="margin-bottom: 1.75rem; color: var(--text-tertiary)">Four rounds, 18 holes each, 6 groups per round &middot; all at Northern Meadows. <strong>Tee times below are preliminary</strong> &mdash; the course does not build tee sheets until roughly March and will confirm then.</div>
+    <div class="format-days">
+      <details class="day-acc">
+        <summary>
+          <span class="day-acc-info">
+            <span class="format-day-name">Friday</span>
+            <span class="format-day-date">September 3 &middot; Round 1</span>
+          </span>
+          <span class="acc-marker">&#9662;</span>
+        </summary>
+        <div class="day-acc-body">
+          <div class="format-day-right">
+            <div class="format-day-type">Format to be confirmed</div>
+            <div class="format-day-desc">First tee 1:30 pm &middot; 6 groups</div>
+          </div>
+        </div>
+      </details>
+      <details class="day-acc">
+        <summary>
+          <span class="day-acc-info">
+            <span class="format-day-name">Saturday</span>
+            <span class="format-day-date">September 4 &middot; Rounds 2 &amp; 3</span>
+          </span>
+          <span class="acc-marker">&#9662;</span>
+        </summary>
+        <div class="day-acc-body">
+          <div class="format-day-right">
+            <div class="format-day-type">Round 2 &mdash; format to be confirmed</div>
+            <div class="format-day-desc">First tee 8:00 am &middot; 6 groups</div>
+
+            <div class="format-day-type" style="margin-top: 1.75rem">Round 3 &mdash; Modified alternate shot</div>
+            <div class="format-day-desc">First tee 2:30 pm &middot; 6 groups &middot; two-man teams</div>
+            <div class="format-day-desc" style="margin-top: 0.6rem">Both partners tee off. The team picks the drive it wants, and the partner whose drive was <em>not</em> chosen plays the next shot. From there the pair alternates shots to the hole.</div>
+          </div>
+        </div>
+      </details>
+      <details class="day-acc">
+        <summary>
+          <span class="day-acc-info">
+            <span class="format-day-name">Sunday</span>
+            <span class="format-day-date">September 5 &middot; Round 4</span>
+          </span>
+          <span class="acc-marker">&#9662;</span>
+        </summary>
+        <div class="day-acc-body">
+          <div class="format-day-right">
+            <div class="format-day-type">Format to be confirmed</div>
+            <div class="format-day-desc">First tee 10:00 am &middot; 6 groups</div>
+          </div>
+        </div>
+      </details>
+    </div>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="acc-title">Teams</span><span class="acc-marker">&#9662;</span></summary>
+    <div class="acc-body">
+    <div class="format-day-desc">Captains, draft tiers and rosters to be set. 24 golfers, 12 a side.</div>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="acc-title">Rules</span><span class="acc-marker">▾</span></summary>
+    <div class="acc-body">
+    <div class="detail-items">
+      <div class="detail-item">Lost ball (water, woods, rough, etc.): drop where it <u>went in</u> and take a 1-stroke penalty.</div>
+      <div class="detail-item">Lift, clean and place in the fairway; play it as it lies in the second cut or deeper.</div>
+      <div class="detail-item">Gimmes are given by the team you're playing — on Sunday, by your individual opponent.</div>
+      <div class="detail-item">You may concede a hole to your opponent at any time.</div>
+      <div class="detail-item">Frends don't let Frends 4-putt.</div>
+      <div class="detail-item">In scrambles, drop within one club length of the chosen shot, no closer to the hole.</div>
+      <div class="detail-item">In scrambles, use at least 2 tee shots from each partner on every nine.</div>
+      <div class="detail-item">Keep up to the group in front of you.</div>
+    </div>
+    </div>
+  </details>
+
+  <details class="acc">
+    <summary><span class="acc-title">Stay</span><span class="acc-marker">&#9662;</span></summary>
+    <div class="acc-body">
+    <div class="details-grid">
+      <div class="detail-block">
+        <div class="detail-block-label">On site at Northern Meadows</div>
+        <div class="detail-items">
+          <div class="detail-item">5 cabins &middot; sleeps 4 each</div>
+          <div class="detail-item">Fairway Villa &middot; sleeps 9</div>
+          <div class="detail-item">Two cabins open Thursday Sept 2</div>
+          <div class="detail-item">Villa and remaining cabins from Friday Sept 3</div>
+        </div>
+      </div>
+      <div class="detail-block">
+        <div class="detail-block-label">Playing for</div>
+        <div class="detail-items">
+          <div class="detail-item">The Frends Trophy</div>
+          <div class="detail-item">MVP Green Jacket</div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </details>
+
+</main>
+
+<script>
+function toggleNav(){
+  var nav = document.getElementById('mobileNav');
+  if(nav.style.display === 'flex'){
+    nav.style.display = 'none';
+  } else {
+    nav.style.display = 'flex';
+  }
+}
+document.addEventListener('click', function(e){
+  var nav = document.getElementById('mobileNav');
+  var btn = document.querySelector('.nav-hamburger');
+  if(nav && btn && !nav.contains(e.target) && !btn.contains(e.target)){
+    nav.style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>
