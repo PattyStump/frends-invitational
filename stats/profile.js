@@ -65,7 +65,7 @@ function renderProfile(player) {
   years.forEach(yr => { allYrRanks[yr] = computeYearRank(ms, player, yr); });
   const seedByYear = ROSTERS ? computeSeedDiff(ms, ROSTERS, player).byYear : {};
 
-  const fmts = [['scramble', 'Scramble'], ['singles', 'Singles'], ['best ball', 'Best ball']];
+  const fmts = [['scramble', 'Scramble'], ['singles', 'Singles'], ['best ball', 'Best ball'], ['alternate shot', 'Alternate Shot']];
   const formatBarsHTML = fmts.map(([k, label]) => {
     const f = byFmt[k];
     const p2 = pct(f.W, f.L, f.T);
@@ -107,6 +107,7 @@ function renderProfile(player) {
       const parts = [];
       if (p2.scramble > 0) parts.push(`${p2.scramble} scramble`);
       if (p2.bestball > 0) parts.push(`${p2.bestball} best ball`);
+      if (p2.altshot > 0) parts.push(`${p2.altshot} alternate shot`);
       return `<div class="partner-row">
         <span class="partner-name">${p2.name}</span>
         <span class="partner-detail">${parts.join(' · ')}</span>
@@ -128,7 +129,7 @@ function renderProfile(player) {
     : playedHTML + upcomingHTML;
 
   const days = ['Fri', 'Sat', 'Sun'];
-  const fmtLabel = { scramble: 'Scramble', singles: 'Singles', 'best ball': 'Best ball' };
+  const fmtLabel = { scramble: 'Scramble', singles: 'Singles', 'best ball': 'Best ball', 'alternate shot': 'Alternate Shot' };
   const sorted = s.matches.slice().sort((a, b) => a.year - b.year || a.day - b.day);
   const matchRowsHTML = sorted.map(m => {
     const res = result(m, player);
@@ -178,7 +179,7 @@ function renderProfile(player) {
     </div>
 
     <div class="section">
-      <div class="section-head">Best partners · combined scramble + best ball record</div>
+      <div class="section-head">Best partners · combined paired-format record</div>
       <div class="partner-list">${partnersHTML}</div>
     </div>
 
