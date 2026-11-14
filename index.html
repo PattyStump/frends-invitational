@@ -72,10 +72,6 @@
                    color: var(--text-tertiary); }
     .intro-video { width: min(100% - 1rem, 720px); aspect-ratio: 832 / 464; object-fit: contain;
                    background: #000; border-radius: var(--radius-lg); display: block; }
-    .intro-skip { background: none; border: 0; cursor: pointer; font: inherit; font-size: 13px;
-                  color: var(--text-tertiary); border-bottom: 0.5px solid var(--border-mid);
-                  padding: 0 0 2px; transition: color 0.15s, border-color 0.15s; }
-    .intro-skip:hover { color: var(--amber); border-color: var(--amber); }
     body.intro-lock { overflow: hidden; }
     @media (prefers-reduced-motion: reduce) { #intro { display: none; } }
   </style>
@@ -87,7 +83,6 @@
   <div class="intro-label">Loading&hellip;</div>
   <video class="intro-video" id="introVideo" src="intro.mp4" poster="intro-poster.jpg"
          autoplay muted playsinline preload="auto" disablepictureinpicture></video>
-  <button class="intro-skip" type="button" id="introSkip">Skip &rarr;</button>
 </div>
 <script>
 (function(){
@@ -110,11 +105,13 @@
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (seen || reduced) { el.style.display = 'none'; document.body.classList.remove('intro-lock'); done = true; return; }
 
+  // No skip control by design: the video is meant to be watched through.
+  // Everything below is a FAILURE escape, not a skip — without them a viewer
+  // whose video never plays would be stuck on a blank screen with no way out.
   vid.addEventListener('ended', dismiss);
   vid.addEventListener('error', dismiss);
-  document.getElementById('introSkip').addEventListener('click', dismiss);
 
-  // Autoplay can be refused (data saver, low power mode, policy) — never trap the viewer.
+  // Autoplay can be refused (data saver, iOS Low Power Mode, policy) — never trap the viewer.
   var p = vid.play();
   if (p && typeof p.catch === 'function') { p.catch(dismiss); }
 
