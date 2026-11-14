@@ -5,8 +5,9 @@ frendsinvitational.com from the `main` branch of PattyStump/frends-invitational.
 Read this file fully before making changes.
 
 ## Repo layout
-- `index.html` — home page
-- `2026.html` — current tournament year page
+- `index.html` — home page (points at the upcoming year: currently 2027)
+- `2027.html` — current tournament year page
+- `2026.html` — past year page (complete: Team Dumas won 17.25–9.75)
 - `stats/index.html` — all-time leaderboard (clicking a player name opens their profile
   in place; the leaderboard is the default view)
 - `stats/player.html` — standalone player profile page (kept as a fallback; still
@@ -17,8 +18,12 @@ Read this file fully before making changes.
   loadAllMatches(), allPlayers(), computePlayerStats(), pct(), colorP(), borderP(),
   teamOf(), result(), computeYearRank(). **DO NOT MODIFY data.js** unless explicitly
   asked — it is verified-correct and everything depends on it.
+  (Changed once, with approval, to add `alternate shot` as a fourth format: a byFmt
+  bucket, partner tracking, and a three-way partner counter. Widening the old
+  scramble/best-ball if/else alone would have counted alternate shot as best ball.)
 - `stats/style.css` — shared styling for all pages
-- `stats/data/` — one CSV per year (2022-2025), the source of truth for all stats
+- `stats/data/` — one CSV per year (2022-2026), the source of truth for all stats.
+  **2027 has no CSV yet and is NOT in DATA_FILES** — add both when results start.
 - `CNAME` — points the custom domain at GitHub Pages
 
 ## How the site computes stats
@@ -30,21 +35,53 @@ So editing a CSV is what "regenerates" the stats — there is nothing else to up
 - format: legacy (2022) or modern (2023 onward)
 - Modern: each player plays exactly 4 matches (2 scrambles + 1 singles + 1 best ball).
   Legacy: exactly 6 (2 singles + 2 best balls + 2 scrambles).
+  **2027 is 5** (2 scrambles + 1 alternate shot + 1 best ball + 1 singles) — see below.
+  The number is per-year, not fixed: it is however many rounds count toward individual
+  records that year. 2026 was 4 only because its four-man was logged points-only.
 - Ties: tie=YES, points split evenly. For scramble/best ball ties, one pair goes in the
   winner columns and one pair in the loser columns — NEVER leave loser columns blank on
   a pair tie (that silently drops a match from both losers). A pair is two players from
   the SAME team facing a pair from the other team.
-- A player not equalling their expected match total (4 modern / 6 legacy) is a RED FLAG
-  for a malformed row — often a tie with blank loser columns. Always verify W+L+T totals.
+- A player not equalling their expected match total (5 in 2027 / 4 in 2023-2026 /
+  6 legacy) is a RED FLAG for a malformed row — often a tie with blank loser columns.
+  Always verify W+L+T totals.
+- match_format values, lowercase in the CSV: `scramble`, `singles`, `best ball`,
+  `alternate shot`. Anything else is counted in overall W/L/T but dropped from the
+  per-format bars, and from partner history for paired formats.
 - Player aliases: only add a second letter when two players share the same last name AND
   the same first initial (e.g. Ma. Baker / Mi. Baker). Otherwise use just the first
   initial even if multiple players share it (e.g. T. Pylypow, T. Banks, T. Walker all
   stay as T. since their last names differ).
 - Team names by year: 2022 Team Ma. Baker vs Team Yuzdepski; 2023 Team D. Dittmer vs
   Team O. Goosen; 2024 Team J. Woods vs Team B. Dazzan; 2025 Team J. Ross vs Team R. Nieman;
-  2026 Team Dumas (captain D. Dumas) vs Team Walker (captain T. Walker).
+  2026 Team Dumas (captain D. Dumas) vs Team Walker (captain T. Walker);
+  2027 captains and team names not yet set.
 
-## 2026 SEASON (conventions — read before entering any 2026 results)
+## 2027 SEASON (conventions — read before entering any 2027 results)
+- Sept 3-6 2027 at NORTHERN MEADOWS — one course for all four rounds (unlike 2026,
+  which used a second course for its Saturday evening round). Seventh edition.
+- 24 golfers, 12 a side. Captains, team names, draft tiers and rosters NOT yet set.
+- Data file `stats/data/2027master.csv` does not exist yet and is not registered in
+  DATA_FILES. Create and register both when the first results come in.
+- FOUR ROUNDS, 18 holes, 6 matches each, all counting toward individual records:
+  - Fri Sept 3, 1:30 pm — two-man scramble, 6 matches, 1 pt each
+  - Sat Sept 4, 8:00 am — two-man scramble, 6 matches, 1 pt each
+  - Sat Sept 4, 2:30 pm — ALTERNATE SHOT, 6 matches, 1 pt each
+  - Sun Sept 5, 10:00 am — best ball, 6 matches, 1 pt each, PLUS 12 individual
+    singles alongside at 0.5 each
+- ALTERNATE SHOT is 2v2 match play, same pair structure as a scramble (two winners and
+  two losers per row, so partner tracking applies). Both partners tee off, the team
+  picks a drive, the partner whose drive was NOT chosen plays the next shot, and the
+  pair alternates from there. A penalty drop does not change whose turn it is.
+- POINTS: 30 in play. 15.5 to win; 15 apiece is a tie. (2026 was 27 and 14 to win.)
+- EACH PLAYER PLAYS 5 MATCHES — not the 4 of 2026. There is no points-only round in
+  2027, so every round counts. Verify W+L+T = 5 for all 24 players.
+- Tee times above are PRELIMINARY. The course does not build tee sheets until roughly
+  March and will confirm then; the schedule is explicitly allowed to change.
+- Field is locked at 24 in the page copy and all the points arithmetic. If it grows
+  (28 was floated during booking), the group count, match counts and points all change.
+
+## 2026 SEASON (complete — Team Dumas won 17.25-9.75)
 - Teams: Team Dumas (D. Dumas) vs Team Walker (T. Walker). 24 players; the rosters and
   draft tiers live in the 2026.html "Teams" section (each team = 4 per tier, tiers 1-3).
 - Data file: `stats/data/2026master.csv` (already registered in DATA_FILES in data.js).
@@ -77,9 +114,10 @@ So editing a CSV is what "regenerates" the stats — there is nothing else to up
   0-0-0 profile/leaderboard row before playing. UPCOMING_PARTNERS in profile.js shows his
   TBD Friday partner (R. Nieman); remove him from UPCOMING_PARTNERS once that match is
   entered.
-- DAILY LOOP: caller gives winners + margins (+ "halved" for ties) -> enter that day's
-  rows in 2026master.csv (read back, verify W+L+T per player and the day's point totals)
-  -> update the scoreboard + Matches outcomes in 2026.html -> preview -> push.
+- DAILY LOOP (applies to whichever year is live — 2027 next): caller gives winners +
+  margins (+ "halved" for ties) -> enter that day's rows in <year>master.csv (read
+  back, verify W+L+T per player and the day's point totals) -> update the scoreboard +
+  Matches outcomes in <year>.html -> preview -> push.
 
 ## WORKFLOW RULES (how I like to work)
 - One change at a time. Build it, let me verify it in the browser, THEN move on. Don't
