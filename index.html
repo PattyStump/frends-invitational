@@ -69,22 +69,13 @@
     .gallery-caption { margin-top: 0.65rem; font-size: 12px; color: var(--text-tertiary); }
     .gallery-caption .cap-year { color: var(--text); font-weight: 500; }
     /* One per row, every photo cropped to the same 3:2 frame and filled, so the
-       stack reads as one set. cover zooms in; the lightbox shows the whole frame. */
+       stack reads as one set. */
     .gallery-item img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2;
                         object-fit: cover; object-position: center;
                         border-radius: var(--radius-lg); border: 0.5px solid var(--border);
-                        background: var(--border); cursor: zoom-in; transition: opacity 0.15s; }
-    .gallery-item img:hover { opacity: 0.88; }
+                        background: var(--border); }
     @media (max-width: 600px) { .gallery { padding-top: 2rem; } .gallery-grid { gap: 1.5rem; } }
 
-    /* Lightbox */
-    #lightbox { position: fixed; inset: 0; z-index: 9998; background: var(--bg);
-                display: none; align-items: center; justify-content: center; padding: 1rem;
-                cursor: zoom-out; }
-    #lightbox.is-open { display: flex; }
-    #lightbox img { max-width: 100%; max-height: 92vh; width: auto; height: auto;
-                    object-fit: contain; border-radius: var(--radius-lg); }
-    body.lb-open { overflow: hidden; }
 
     /* Intro overlay */
     #intro { position: fixed; inset: 0; z-index: 9999; background: var(--bg);
@@ -207,54 +198,30 @@
   </div>
 
   <section class="gallery">
-    <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-grid">
       <figure class="gallery-item">
-        <img src="photos/2026.jpg" alt="Frends VI, 2026, Nipawin, Saskatchewan" loading="lazy" decoding="async" width="1400" height="932" data-full="photos/full/2026.jpg">
+        <img src="photos/2026.jpg" alt="Frends VI, 2026, Nipawin, Saskatchewan" loading="lazy" decoding="async" width="1400" height="932">
         <figcaption class="gallery-caption"><span class="cap-year">2026</span> &middot; Frends VI &middot; Nipawin, SK</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="photos/2025.jpg" alt="Frends V, 2025, Kelowna, British Columbia" loading="lazy" decoding="async" width="1400" height="934" data-full="photos/full/2025.jpg">
+        <img src="photos/2025.jpg" alt="Frends V, 2025, Kelowna, British Columbia" loading="lazy" decoding="async" width="1400" height="934">
         <figcaption class="gallery-caption"><span class="cap-year">2025</span> &middot; Frends V &middot; Kelowna, BC</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="photos/2024.jpg" alt="Frends IV, 2024, Candle Lake, Saskatchewan" loading="lazy" decoding="async" width="1400" height="932" data-full="photos/full/2024.jpg">
+        <img src="photos/2024.jpg" alt="Frends IV, 2024, Candle Lake, Saskatchewan" loading="lazy" decoding="async" width="1400" height="932">
         <figcaption class="gallery-caption"><span class="cap-year">2024</span> &middot; Frends IV &middot; Candle Lake, SK</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="photos/2023.jpg" alt="Frends III, 2023, Elbow, Saskatchewan" loading="lazy" decoding="async" width="1400" height="932" data-full="photos/full/2023.jpg">
+        <img src="photos/2023.jpg" alt="Frends III, 2023, Elbow, Saskatchewan" loading="lazy" decoding="async" width="1400" height="932">
         <figcaption class="gallery-caption"><span class="cap-year">2023</span> &middot; Frends III &middot; Elbow, SK</figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="photos/2022.jpg" alt="Frends II, 2022, Jackfish Lake, Saskatchewan" loading="lazy" decoding="async" width="1400" height="934" data-full="photos/full/2022.jpg">
+        <img src="photos/2022.jpg" alt="Frends II, 2022, Jackfish Lake, Saskatchewan" loading="lazy" decoding="async" width="1400" height="934">
         <figcaption class="gallery-caption"><span class="cap-year">2022</span> &middot; Frends II &middot; Jackfish Lake, SK</figcaption>
       </figure>
     </div>
   </section>
 </main>
-
-<div id="lightbox" aria-hidden="true"><img id="lightboxImg" src="" alt=""></div>
-<script>
-(function(){
-  var grid = document.getElementById('galleryGrid'),
-      box  = document.getElementById('lightbox'),
-      img  = document.getElementById('lightboxImg');
-  function open(src, alt){
-    img.src = src; img.alt = alt || '';
-    box.classList.add('is-open'); box.setAttribute('aria-hidden','false');
-    document.body.classList.add('lb-open');
-  }
-  function close(){
-    box.classList.remove('is-open'); box.setAttribute('aria-hidden','true');
-    document.body.classList.remove('lb-open'); img.src = '';
-  }
-  grid.addEventListener('click', function(e){
-    var t = e.target;
-    if (t && t.tagName === 'IMG') open(t.getAttribute('data-full') || t.getAttribute('src'), t.getAttribute('alt'));
-  });
-  box.addEventListener('click', close);
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
-})();
-</script>
 
 <script>
 function toggleNav(){
