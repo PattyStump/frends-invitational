@@ -63,9 +63,65 @@
       .home-hero { padding-bottom: 1.5rem; margin-bottom: 0; border-bottom: none; }
       .dumas-img { position: static; display: block; right: auto; bottom: auto; left: auto; transform: none; margin: 0.5rem auto 0.5rem; width: 62vw; }
     }
+    /* Intro overlay */
+    #intro { position: fixed; inset: 0; z-index: 9999; background: var(--bg);
+             display: flex; flex-direction: column; align-items: center; justify-content: center;
+             gap: 1.5rem; padding: 1rem; opacity: 1; transition: opacity 0.5s ease; }
+    #intro.is-gone { opacity: 0; pointer-events: none; }
+    .intro-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+                   color: var(--text-tertiary); }
+    .intro-video { width: min(100% - 1rem, 720px); aspect-ratio: 832 / 464; object-fit: contain;
+                   background: #000; border-radius: var(--radius-lg); display: block; }
+    .intro-skip { background: none; border: 0; cursor: pointer; font: inherit; font-size: 13px;
+                  color: var(--text-tertiary); border-bottom: 0.5px solid var(--border-mid);
+                  padding: 0 0 2px; transition: color 0.15s, border-color 0.15s; }
+    .intro-skip:hover { color: var(--amber); border-color: var(--amber); }
+    body.intro-lock { overflow: hidden; }
+    @media (prefers-reduced-motion: reduce) { #intro { display: none; } }
   </style>
 </head>
-<body>
+<body class="intro-lock">
+
+<noscript><style>#intro{display:none!important}body.intro-lock{overflow:auto}</style></noscript>
+<div id="intro" role="status" aria-label="Intro video">
+  <div class="intro-label">Loading&hellip;</div>
+  <video class="intro-video" id="introVideo" src="intro.mp4" poster="intro-poster.jpg"
+         autoplay muted playsinline preload="auto" disablepictureinpicture></video>
+  <button class="intro-skip" type="button" id="introSkip">Skip &rarr;</button>
+</div>
+<script>
+(function(){
+  var el = document.getElementById('intro'),
+      vid = document.getElementById('introVideo'),
+      done = false;
+
+  function dismiss(){
+    if (done) return; done = true;
+    try { sessionStorage.setItem('fi_intro_seen', '1'); } catch (e) {}
+    try { vid.pause(); } catch (e) {}
+    el.classList.add('is-gone');
+    document.body.classList.remove('intro-lock');
+    setTimeout(function(){ if (el.parentNode) el.parentNode.removeChild(el); }, 600);
+  }
+
+  // Already seen this session, or the viewer asked for reduced motion: never show it.
+  var seen = false;
+  try { seen = sessionStorage.getItem('fi_intro_seen') === '1'; } catch (e) {}
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (seen || reduced) { el.style.display = 'none'; document.body.classList.remove('intro-lock'); done = true; return; }
+
+  vid.addEventListener('ended', dismiss);
+  vid.addEventListener('error', dismiss);
+  document.getElementById('introSkip').addEventListener('click', dismiss);
+
+  // Autoplay can be refused (data saver, low power mode, policy) — never trap the viewer.
+  var p = vid.play();
+  if (p && typeof p.catch === 'function') { p.catch(dismiss); }
+
+  // Last resort: if 'ended' never arrives because playback stalled, leave anyway.
+  setTimeout(dismiss, 16000);
+})();
+</script>
 
 <nav>
   <div class="nav-links">
