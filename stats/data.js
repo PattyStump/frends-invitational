@@ -73,7 +73,7 @@ function borderP(p) {
 function computePlayerStats(ms, player) {
   const pm = ms.filter(m => [m.wA, m.wB, m.lA, m.lB].includes(player));
   let W = 0, L = 0, T = 0;
-  const byFmt = { scramble: { W: 0, L: 0, T: 0 }, singles: { W: 0, L: 0, T: 0 }, 'best ball': { W: 0, L: 0, T: 0 } };
+  const byFmt = { scramble: { W: 0, L: 0, T: 0 }, singles: { W: 0, L: 0, T: 0 }, 'best ball': { W: 0, L: 0, T: 0 }, 'alternate shot': { W: 0, L: 0, T: 0 } };
   const byYear = {};
   const partners = {};
 
@@ -88,13 +88,15 @@ function computePlayerStats(ms, player) {
     if (!byYear[yr]) byYear[yr] = { W: 0, L: 0, T: 0, team: '' };
     if (res === 'W') byYear[yr].W++; else if (res === 'L') byYear[yr].L++; else byYear[yr].T++;
     if (!byYear[yr].team) byYear[yr].team = teamOf(m, player);
-    if (m.mf === 'scramble' || m.mf === 'best ball') {
+    if (m.mf === 'scramble' || m.mf === 'best ball' || m.mf === 'alternate shot') {
       const myTeam = teamOf(m, player);
       [m.wA, m.wB, m.lA, m.lB].forEach(p => {
         if (p && p !== player && teamOf(m, p) === myTeam) {
-          if (!partners[p]) partners[p] = { W: 0, L: 0, T: 0, scramble: 0, bestball: 0 };
+          if (!partners[p]) partners[p] = { W: 0, L: 0, T: 0, scramble: 0, bestball: 0, altshot: 0 };
           if (res === 'W') partners[p].W++; else if (res === 'L') partners[p].L++; else partners[p].T++;
-          if (m.mf === 'scramble') partners[p].scramble++; else partners[p].bestball++;
+          if (m.mf === 'scramble') partners[p].scramble++;
+          else if (m.mf === 'best ball') partners[p].bestball++;
+          else partners[p].altshot++;
         }
       });
     }
